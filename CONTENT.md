@@ -24,7 +24,7 @@ prefix, and lets the entry into the `ProfilePage` structured data as
 `hasOccupation`. Draft entries are deliberately excluded from that, because an
 unverified employment claim is worse machine-readable than absent.
 
-## 2. Two things I could not reach
+## 2. One thing I could not reach
 
 **Education.** You said you'd paste the details. Nothing in the CV, GitHub or
 CodeCanyon records it, and LinkedIn blocks automated access (HTTP 999). Give me
@@ -32,10 +32,9 @@ degree, institution and years and I'll add it as the opening entry and as
 `alumniOf` in the structured data. StoreKeeper dates to 2015 and you called it
 student work, so it belongs just before that.
 
-**AR Proactive.** You mentioned the CV predates joining them, but nothing else —
-no title, dates, or what they do. There's currently a gap in the timeline between
-Debutify ending (April 2023) and Binary Castle starting (March 2024) that this
-probably fills.
+~~**AR Proactive.**~~ Added as `src/content/journey/2022-arproactive.md` from
+your Turing profile: Senior Software Engineer, December 2022 — March 2025, which
+covers the old gap between Debutify and Binary Castle (and overlaps both ends).
 
 ## 3. Your current role
 
