@@ -1,0 +1,14 @@
+---
+interface Props {
+  schema: object;
+}
+
+const { schema } = Astro.props;
+
+// `set:html` with JSON.stringify — Astro would otherwise HTML-escape the quotes
+// and produce a document search engines cannot parse.
+// `<` is escaped so a string value can never terminate the script element early.
+const json = JSON.stringify(schema).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" is:inline set:html={json} />

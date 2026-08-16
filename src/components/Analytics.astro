@@ -1,0 +1,31 @@
+---
+import { SITE } from '../lib/site';
+
+// Production only — dev and preview builds should never pollute the property.
+const enabled = import.meta.env.PROD && Boolean(SITE.analyticsId);
+const loaderSrc = `https://www.googletagmanager.com/gtag/js?id=${SITE.analyticsId}`;
+
+/*
+ * The init snippet is built as a string and injected with `set:html` rather
+ * than written as script children.
+ *
+ * Inside an Astro JSX expression a <script> body is parsed as JSX children, so
+ * the `{` opening `function gtag() {` reads as the start of an expression. Astro
+ * itself compiles it correctly, but every other tool that parses the file —
+ * Prettier included — fails on it. Passing the body as an attribute value keeps
+ * it opaque to the JSX parser.
+ */
+const init = `window.dataLayer = window.dataLayer || [];
+function gtag(){ window.dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', ${JSON.stringify(SITE.analyticsId)}, { anonymize_ip: true });`;
+---
+
+{
+  enabled && (
+    <>
+      <script is:inline async src={loaderSrc} />
+      <script is:inline set:html={init} />
+    </>
+  )
+}

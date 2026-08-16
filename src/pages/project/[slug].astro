@@ -1,0 +1,46 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getProjects } from '../../lib/content';
+import { SITE } from '../../lib/site';
+
+/**
+ * Legacy redirect stubs for the 2022 route `/project/<slug>` (singular).
+ *
+ * GitHub Pages cannot issue real 301s — it serves static files only — so this is
+ * a meta-refresh page with a canonical pointing at the new location. It is
+ * `noindex` and excluded from the sitemap, so it never competes with the real
+ * page in search results.
+ *
+ * The old site was hash-routed, so almost nothing was ever indexed at these
+ * paths; these exist for anyone who hand-edited a URL or followed a stale link.
+ */
+export const getStaticPaths = (async () => {
+  const projects = await getProjects();
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { slug: project.slug, name: project.name },
+  }));
+}) satisfies GetStaticPaths;
+
+const { slug, name } = Astro.props;
+const target = `/projects/${slug}/`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={new URL(target, SITE.url).href} />
+    <title>Moved — {name}</title>
+    <script is:inline define:vars={{ target }}>
+      // Fires before the meta-refresh so the redirect is instant and does not
+      // leave an extra entry in the back-button history.
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p>This page has moved to <a href={target}>{target}</a>.</p>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from './ProjectCard.astro';
+import { cardStyles } from '../lib/card-styles';
+import { FACET_META, type FacetKey, type FacetTermWithCount, type Project } from '../lib/types';
+
+interface Props {
+  facetKey: FacetKey;
+  term: FacetTermWithCount;
+  projects: Project[];
+}
+
+const { facetKey, term, projects } = Astro.props;
+const meta = FACET_META[facetKey];
+
+// These pages exist for two reasons: they are the no-JS path to a filtered view,
+// and they are real indexable documents for long-tail queries ("Django projects")
+// that a query-string view could never rank for, since `/projects/?...`
+// canonicalises to `/projects/`.
+const title = `${term.name} projects`;
+const description = `${projects.length} ${projects.length === 1 ? 'project' : 'projects'} built with ${term.name} — by K M Rifat ul Alom.`;
+
+// Link to the equivalent live filter so visitors can widen the selection.
+const explorerHref = `/projects/?${facetKey}=${term.slug}`;
+---
+
+<Base title={title} description={description}>
+  <div class="py-12 sm:py-16">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <a
+        href="/projects/"
+        class="text-[var(--text-muted)] transition-colors hover:text-[var(--brand)]"
+      >
+        ← All projects
+      </a>
+    </nav>
+
+    <header class="mt-6 max-w-2xl">
+      <p class="text-sm font-medium tracking-wide text-[var(--brand)] uppercase">{meta.label}</p>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{title}</h1>
+      <p class="mt-4 text-lg text-[var(--text-muted)]">{description}</p>
+
+      <a
+        href={explorerHref}
+        class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--brand)] hover:underline"
+      >
+        Refine this in the full catalogue →
+      </a>
+    </header>
+
+    <div class={`mt-10 ${cardStyles.grid}`}>
+      {projects.map((project, index) => <ProjectCard project={project} eager={index < 3} />)}
+    </div>
+  </div>
+</Base>

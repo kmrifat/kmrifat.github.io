@@ -1,0 +1,59 @@
+---
+// Prevents a flash of the unfiltered catalogue.
+//
+// The server renders all 16 cards, and the browser paints that HTML before any
+// JavaScript runs. So a visitor arriving at /projects/?technologies=django would
+// see all 16 for one frame before React hydrates and narrows to 5.
+//
+// This runs in <head>, before the body is painted: it reads the same query
+// parameters the explorer does and installs a stylesheet that hides
+// non-matching cards immediately. React removes the `data-filtering` attribute
+// once it owns the grid, which switches the whole rule off.
+//
+// Facets only — a `search` term cannot be evaluated in CSS. Those URLs fall back
+// to React's layout-effect correction, which is one frame later.
+---
+
+<script is:inline>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var FACETS = ['technologies', 'categories', 'apis', 'tags'];
+    var clauses = [];
+
+    for (var i = 0; i < FACETS.length; i++) {
+      var raw = params.get(FACETS[i]);
+      if (!raw) continue;
+
+      var values = raw
+        .split(',')
+        .map(function (value) {
+          return value.trim().toLowerCase();
+        })
+        .filter(Boolean);
+      if (values.length === 0) continue;
+
+      // `:is(...)` gives OR within a facet; concatenating clauses gives AND
+      // across facets — the same semantics the server applies.
+      var selectors = values.map(function (value) {
+        // Cards expose slugs; a legacy URL may carry a display name ("Vue.js"),
+        // which slugifies to the same token.
+        var slug = value.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        return '[data-' + FACETS[i] + '~="' + slug + '"]';
+      });
+
+      clauses.push(':is(' + selectors.join(',') + ')');
+    }
+
+    if (clauses.length === 0) return;
+
+    var style = document.createElement('style');
+    style.textContent =
+      'html[data-filtering] [data-project]{display:none!important}' +
+      'html[data-filtering] [data-project]' +
+      clauses.join('') +
+      '{display:flex!important}';
+
+    document.documentElement.dataset.filtering = '1';
+    document.head.appendChild(style);
+  })();
+</script>

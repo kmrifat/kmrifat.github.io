@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectExplorer from '../../components/explorer/ProjectExplorer';
+import AntiFlashScript from '../../components/explorer/AntiFlashScript.astro';
+import { getProjects, facets } from '../../lib/content';
+import { resolveCardImages } from '../../lib/resolve-images';
+import { FACET_META, FACET_KEYS } from '../../lib/types';
+import JsonLd from '../../components/JsonLd.astro';
+import { graph, personSchema, itemListSchema } from '../../lib/jsonld';
+import { SITE } from '../../lib/site';
+
+const projects = await getProjects();
+
+// Images are optimised here, at build time, and handed to the island as plain
+// URLs — Astro's <Image> cannot run inside a React component.
+const images = await resolveCardImages(projects);
+const listSchema = graph(personSchema(), itemListSchema(projects, `${SITE.url}/projects/`));
+---
+
+<Base
+  title="Projects"
+  description={`${projects.length} projects — web platforms, SaaS products and open-source tools built with Django, Laravel, Vue and React.`}
+  fullWidth
+>
+  <AntiFlashScript slot="head" />
+  <JsonLd slot="head" schema={listSchema} />
+
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+    <header class="max-w-2xl">
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Projects</h1>
+      <p class="mt-4 text-lg text-pretty text-[var(--text-muted)]">
+        {projects.length} projects built over the last several years — medical software, learning platforms,
+        e-commerce, and the tools around them.
+      </p>
+    </header>
+
+    {
+      /*
+      `client:load` rather than `client:idle`: this is the page's primary
+      interactive content, and deferring hydration would leave a filtered URL
+      showing the unfiltered grid for longer than necessary.
+
+      Astro server-renders the island too, so the static HTML already contains
+      all 16 cards — crawlers and no-JS visitors get the full catalogue.
+    */
+    }
+    <ProjectExplorer client:load projects={projects} facets={facets} images={images} />
+
+    {
+      /*
+      Filtering needs JavaScript. These pre-rendered pages are the no-JS path,
+      and they double as indexable landing pages for long-tail queries like
+      "Django projects" — which `/projects/?technologies=django` could never rank
+      for, since it canonicalises to `/projects/`.
+    */
+    }
+    <nav class="mt-20 border-t border-[var(--border-subtle)] pt-10" aria-label="Browse by category">
+      <h2 class="text-sm font-semibold tracking-wide uppercase">Browse by</h2>
+
+      <div class="mt-6 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          FACET_KEYS.map((key) => {
+            const terms = facets[key].filter((term) => term.count > 0);
+            if (terms.length === 0) return null;
+
+            return (
+              <div>
+                <h3 class="text-xs font-semibold tracking-wide text-[var(--text-muted)] uppercase">
+                  {FACET_META[key].label}
+                </h3>
+                <ul class="mt-3 flex flex-wrap gap-1.5">
+                  {terms.map((term) => (
+                    <li>
+                      <a
+                        href={`/projects/${FACET_META[key].segment}/${term.slug}/`}
+                        class="inline-flex items-center gap-1.5 rounded-md border border-[var(--border-subtle)] px-2 py-1 text-xs transition-colors hover:border-[var(--brand)] hover:text-[var(--brand)]"
+                      >
+                        {term.name}
+                        <span class="text-[var(--text-muted)]">{term.count}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })
+        }
+      </div>
+    </nav>
+  </div>
+</Base>

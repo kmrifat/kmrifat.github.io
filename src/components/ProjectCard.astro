@@ -1,0 +1,55 @@
+---
+import type { Project } from '../lib/types';
+import { cardStyles, MAX_CARD_CHIPS } from '../lib/card-styles';
+import ProjectMedia from './ProjectMedia.astro';
+
+interface Props {
+  project: Project;
+  eager?: boolean;
+}
+
+const { project, eager = false } = Astro.props;
+
+const chips = project.technologies.slice(0, MAX_CARD_CHIPS);
+const overflow = project.technologies.length - chips.length;
+
+// The data-* attributes let the pre-paint anti-flash script hide non-matching
+// cards before hydration, and give verify-build.mjs something to count.
+const dataAttrs = {
+  'data-project': project.slug,
+  'data-technologies': project.technologies.map((t) => t.slug).join(' '),
+  'data-categories': project.categories.map((t) => t.slug).join(' '),
+  'data-apis': project.apis.map((t) => t.slug).join(' '),
+  'data-tags': project.tags.map((t) => t.slug).join(' '),
+};
+---
+
+<article class={cardStyles.article} {...dataAttrs}>
+  <div class={cardStyles.mediaWrap}>
+    <ProjectMedia
+      image={project.featureImage}
+      slug={project.slug}
+      name={project.name}
+      eager={eager}
+    />
+  </div>
+
+  <div class={cardStyles.body}>
+    <h3 class={cardStyles.title}>
+      <a href={`/projects/${project.slug}/`} class={cardStyles.titleLink}>{project.name}</a>
+    </h3>
+
+    {project.shortDescription && <p class={cardStyles.description}>{project.shortDescription}</p>}
+
+    {
+      chips.length > 0 && (
+        <ul class={cardStyles.chipRow}>
+          {chips.map((tech) => (
+            <li class={cardStyles.chip}>{tech.name}</li>
+          ))}
+          {overflow > 0 && <li class={cardStyles.chipMore}>+{overflow}</li>}
+        </ul>
+      )
+    }
+  </div>
+</article>

@@ -1,0 +1,322 @@
+{
+  "technologies": [
+    {
+      "id": 3,
+      "name": "Vue.js",
+      "slug": "vue-js",
+      "count": 9
+    },
+    {
+      "id": 1,
+      "name": "Laravel",
+      "slug": "laravel",
+      "count": 8
+    },
+    {
+      "id": 12,
+      "name": "MySQL",
+      "slug": "mysql",
+      "count": 7
+    },
+    {
+      "id": 2,
+      "name": "Django",
+      "slug": "django",
+      "count": 5
+    },
+    {
+      "id": 14,
+      "name": "Django Rest Framework",
+      "slug": "django-rest-framework",
+      "count": 4
+    },
+    {
+      "id": 15,
+      "name": "Django Q",
+      "slug": "django-q",
+      "count": 3
+    },
+    {
+      "id": 10,
+      "name": "Bootstrap",
+      "slug": "bootstrap",
+      "count": 2
+    },
+    {
+      "id": 7,
+      "name": "Python",
+      "slug": "python",
+      "count": 2
+    },
+    {
+      "id": 18,
+      "name": "Selenium",
+      "slug": "selenium",
+      "count": 2
+    },
+    {
+      "id": 16,
+      "name": "Django Channel",
+      "slug": "django-channel",
+      "count": 1
+    },
+    {
+      "id": 19,
+      "name": "Laravel Backpack",
+      "slug": "laravel-backpack",
+      "count": 1
+    },
+    {
+      "id": 13,
+      "name": "Pusher",
+      "slug": "pusher",
+      "count": 1
+    },
+    {
+      "id": 17,
+      "name": "WebRTC",
+      "slug": "webrtc",
+      "count": 1
+    },
+    {
+      "id": 5,
+      "name": "Angular",
+      "slug": "angular",
+      "count": 0
+    },
+    {
+      "id": 20,
+      "name": "Graphene Django",
+      "slug": "graphene-django",
+      "count": 0
+    },
+    {
+      "id": 8,
+      "name": "JavaFX",
+      "slug": "javafx",
+      "count": 0
+    },
+    {
+      "id": 6,
+      "name": "PHP",
+      "slug": "php",
+      "count": 0
+    },
+    {
+      "id": 21,
+      "name": "PostgreSQL",
+      "slug": "postgresql",
+      "count": 0
+    },
+    {
+      "id": 9,
+      "name": "React Native",
+      "slug": "react-native",
+      "count": 0
+    },
+    {
+      "id": 4,
+      "name": "React.js",
+      "slug": "react-js",
+      "count": 0
+    },
+    {
+      "id": 11,
+      "name": "Tailwind",
+      "slug": "tailwind",
+      "count": 0
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "ERP",
+      "slug": "erp",
+      "count": 4
+    },
+    {
+      "id": 11,
+      "name": "Crawling",
+      "slug": "crawling",
+      "count": 2
+    },
+    {
+      "id": 3,
+      "name": "E-Commerce",
+      "slug": "e-commerce",
+      "count": 2
+    },
+    {
+      "id": 2,
+      "name": "Medical Software",
+      "slug": "medical-software",
+      "count": 2
+    },
+    {
+      "id": 10,
+      "name": "Open Source",
+      "slug": "open-source",
+      "count": 2
+    },
+    {
+      "id": 5,
+      "name": "SaaS",
+      "slug": "saas",
+      "count": 2
+    },
+    {
+      "id": 7,
+      "name": "LMS",
+      "slug": "lms",
+      "count": 1
+    },
+    {
+      "id": 9,
+      "name": "Package Development",
+      "slug": "package-development",
+      "count": 1
+    },
+    {
+      "id": 6,
+      "name": "Reservation",
+      "slug": "reservation",
+      "count": 1
+    },
+    {
+      "id": 12,
+      "name": "Social Media Platform",
+      "slug": "social-media-platform",
+      "count": 1
+    },
+    {
+      "id": 8,
+      "name": "Video Calling App",
+      "slug": "video-calling-app",
+      "count": 1
+    },
+    {
+      "id": 4,
+      "name": "HRM",
+      "slug": "hrm",
+      "count": 0
+    }
+  ],
+  "apis": [
+    {
+      "id": 2,
+      "name": "Stripe",
+      "slug": "stripe",
+      "count": 3
+    },
+    {
+      "id": 8,
+      "name": "Braincert",
+      "slug": "braincert",
+      "count": 1
+    },
+    {
+      "id": 11,
+      "name": "Easyask Search API",
+      "slug": "easyask-search-api",
+      "count": 1
+    },
+    {
+      "id": 5,
+      "name": "Facebook Graph",
+      "slug": "facebook-graph",
+      "count": 1
+    },
+    {
+      "id": 4,
+      "name": "Google Auth",
+      "slug": "google-auth",
+      "count": 1
+    },
+    {
+      "id": 3,
+      "name": "Google Map",
+      "slug": "google-map",
+      "count": 1
+    },
+    {
+      "id": 10,
+      "name": "Mailgun",
+      "slug": "mailgun",
+      "count": 1
+    },
+    {
+      "id": 1,
+      "name": "Paypal",
+      "slug": "paypal",
+      "count": 1
+    },
+    {
+      "id": 9,
+      "name": "SMS Api",
+      "slug": "sms-api",
+      "count": 1
+    },
+    {
+      "id": 6,
+      "name": "Facebook Chat Api",
+      "slug": "facebook-chat-api",
+      "count": 0
+    },
+    {
+      "id": 7,
+      "name": "SportData.io",
+      "slug": "sportdata-io",
+      "count": 0
+    }
+  ],
+  "tags": [
+    {
+      "id": 4,
+      "name": "Ubuntu",
+      "slug": "ubuntu",
+      "count": 6
+    },
+    {
+      "id": 5,
+      "name": "Supervisor",
+      "slug": "supervisor",
+      "count": 5
+    },
+    {
+      "id": 3,
+      "name": "Digital Ocean",
+      "slug": "digital-ocean",
+      "count": 4
+    },
+    {
+      "id": 6,
+      "name": "Github Action",
+      "slug": "github-action",
+      "count": 4
+    },
+    {
+      "id": 1,
+      "name": "Prescription Software",
+      "slug": "prescription-software",
+      "count": 2
+    },
+    {
+      "id": 2,
+      "name": "Appointment Software",
+      "slug": "appointment-software",
+      "count": 1
+    },
+    {
+      "id": 7,
+      "name": "AWS EC2",
+      "slug": "aws-ec2",
+      "count": 0
+    },
+    {
+      "id": 8,
+      "name": "AWS Route 53",
+      "slug": "aws-route-53",
+      "count": 0
+    }
+  ]
+}

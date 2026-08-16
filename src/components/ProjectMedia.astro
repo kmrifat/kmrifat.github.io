@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageRef } from '../lib/types';
+import { placeholderFor } from '../lib/placeholder';
+
+interface Props {
+  image: ImageRef;
+  slug: string;
+  name: string;
+  /** Rendered eagerly for above-the-fold hero images. */
+  eager?: boolean;
+  sizes?: string;
+  class?: string;
+}
+
+const {
+  image,
+  slug,
+  name,
+  eager = false,
+  sizes = '(min-width: 1024px) 33vw, 100vw',
+  class: className = '',
+} = Astro.props;
+
+// Downloaded images live in src/assets/remote/ and are resolved through a glob so
+// Astro can optimise them (AVIF/WebP, multiple widths, intrinsic dimensions).
+const localImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/remote/**/*.{png,jpg,jpeg,webp,avif,gif}',
+);
+
+const loader = image.src ? localImages[`/src/assets/${image.src}`] : undefined;
+const resolved = loader ? (await loader()).default : undefined;
+
+const placeholder = placeholderFor(slug, name);
+---
+
+{
+  resolved ? (
+    <Image
+      src={resolved}
+      alt={image.alt || name}
+      widths={[400, 800, 1200]}
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding={eager ? 'sync' : 'async'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      class={`size-full object-cover ${className}`}
+    />
+  ) : (
+    /*
+     * No image available. This is currently the case for every project, so the
+     * fallback has to look intentional — a stable brand-derived gradient with the
+     * project's initials, not a broken-image icon.
+     *
+     * aria-hidden because the adjacent heading already names the project; a
+     * screen reader announcing "XS" here would be noise.
+     */
+    <div
+      class={`grid size-full place-items-center ${className}`}
+      style={`background-image: ${placeholder.background}`}
+      aria-hidden="true"
+    >
+      <span class="text-4xl font-bold tracking-tight text-white/90 drop-shadow-sm">
+        {placeholder.initials}
+      </span>
+    </div>
+  )
+}

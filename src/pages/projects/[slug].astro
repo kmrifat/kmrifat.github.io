@@ -1,0 +1,217 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import ProjectMedia from '../../components/ProjectMedia.astro';
+import YouTubeLite from '../../components/YouTubeLite.astro';
+import { getProjects } from '../../lib/content';
+import { clampDescription } from '../../lib/seo';
+import JsonLd from '../../components/JsonLd.astro';
+import { graph, personSchema, projectSchema } from '../../lib/jsonld';
+import { FACET_META, FACET_KEYS, type FacetKey } from '../../lib/types';
+import type { Project } from '../../lib/types';
+
+export const getStaticPaths = (async () => {
+  const projects = await getProjects();
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props as { project: Project };
+
+const description = clampDescription(project.shortDescription ?? project.description);
+const detailSchema = graph(personSchema(), projectSchema(project));
+
+const facetSections = FACET_KEYS.map((key: FacetKey) => ({
+  key,
+  label: FACET_META[key].label,
+  segment: FACET_META[key].segment,
+  terms: project[key],
+})).filter((section) => section.terms.length > 0);
+---
+
+<Base title={project.name} description={description} type="article">
+  <JsonLd slot="head" schema={detailSchema} />
+  <article class="py-12 sm:py-16">
+    <nav aria-label="Breadcrumb" class="text-sm">
+      <a
+        href="/projects/"
+        class="text-[var(--text-muted)] transition-colors hover:text-[var(--brand)]"
+      >
+        ← All projects
+      </a>
+    </nav>
+
+    <header class="mt-6 max-w-3xl">
+      <h1 class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">{project.name}</h1>
+      {
+        project.shortDescription && (
+          <p class="mt-4 text-lg text-pretty text-[var(--text-muted)]">
+            {project.shortDescription}
+          </p>
+        )
+      }
+    </header>
+
+    {
+      project.buttons.length > 0 && (
+        <div class="mt-8 flex flex-wrap gap-3">
+          {project.buttons.map((button) => (
+            <a
+              href={button.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] px-4 py-2.5 text-sm font-medium transition-colors hover:border-[var(--brand)] hover:text-[var(--brand)]"
+            >
+              {button.title}
+              {/*
+                These links are genuinely http:// on the origin. Rewriting them
+                would produce dead links, so they are labelled instead.
+              */}
+              {button.insecure && (
+                <span
+                  class="rounded bg-[var(--surface-sunken)] px-1.5 py-0.5 text-[10px] tracking-wide text-[var(--text-muted)] uppercase"
+                  title="This link is not served over HTTPS"
+                >
+                  http
+                </span>
+              )}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    <div
+      class="mt-10 overflow-hidden rounded-[var(--radius-card)] border border-[var(--border-subtle)]"
+    >
+      {
+        project.youtubeId ? (
+          <YouTubeLite id={project.youtubeId} title={project.name} />
+        ) : (
+          <div class="aspect-[16/9]">
+            <ProjectMedia
+              image={project.featureImage}
+              slug={project.slug}
+              name={project.name}
+              eager
+              sizes="(min-width: 1024px) 1024px, 100vw"
+            />
+          </div>
+        )
+      }
+    </div>
+
+    <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div class="space-y-12">
+        {
+          project.description && (
+            <section>
+              <h2 class="text-2xl font-semibold tracking-tight">Overview</h2>
+              <div class="mt-4 space-y-4 leading-relaxed text-[var(--text-muted)]">
+                {project.description
+                  .split(/\n{2,}/)
+                  .filter(Boolean)
+                  .map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          project.features.length > 0 && (
+            <section>
+              <h2 class="text-2xl font-semibold tracking-tight">Features</h2>
+              <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+                {project.features.map((feature) => (
+                  <li class="rounded-[var(--radius-card)] border border-[var(--border-subtle)] p-4">
+                    <h3 class="font-medium">{feature.title}</h3>
+                    {feature.description && (
+                      <p class="mt-1.5 text-sm text-[var(--text-muted)]">{feature.description}</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          project.contexts.length > 0 && (
+            <section>
+              <h2 class="text-2xl font-semibold tracking-tight">Context</h2>
+              <div class="mt-6 space-y-6">
+                {project.contexts.map((context) => (
+                  <div>
+                    <h3 class="font-medium">{context.title}</h3>
+                    {context.description && (
+                      <p class="mt-1.5 leading-relaxed text-[var(--text-muted)]">
+                        {context.description}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        {
+          project.screenshots.length > 0 && (
+            <section>
+              <h2 class="text-2xl font-semibold tracking-tight">Screenshots</h2>
+              <ul class="mt-6 grid gap-5 sm:grid-cols-2">
+                {project.screenshots.map((shot) => (
+                  <li>
+                    <figure>
+                      <div class="aspect-[16/10] overflow-hidden rounded-[var(--radius-card)] border border-[var(--border-subtle)]">
+                        <ProjectMedia
+                          image={shot.image}
+                          slug={project.slug}
+                          name={shot.title ?? project.name}
+                          sizes="(min-width: 640px) 50vw, 100vw"
+                        />
+                      </div>
+                      {shot.title && (
+                        <figcaption class="mt-2 text-sm text-[var(--text-muted)]">
+                          {shot.title}
+                        </figcaption>
+                      )}
+                    </figure>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+
+      <aside class="space-y-8 lg:sticky lg:top-24 lg:self-start">
+        {
+          facetSections.map((section) => (
+            <div>
+              <h2 class="text-xs font-semibold tracking-wide text-[var(--text-muted)] uppercase">
+                {section.label}
+              </h2>
+              <ul class="mt-3 flex flex-wrap gap-1.5">
+                {section.terms.map((term) => (
+                  <li>
+                    <a
+                      href={`/projects/${section.segment}/${term.slug}/`}
+                      class="inline-block rounded-md border border-[var(--border-subtle)] px-2 py-1 text-xs transition-colors hover:border-[var(--brand)] hover:text-[var(--brand)]"
+                    >
+                      {term.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </aside>
+    </div>
+  </article>
+</Base>

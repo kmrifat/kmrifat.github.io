@@ -1,0 +1,28 @@
+---
+import type { GetStaticPaths } from 'astro';
+import FacetLanding from '../../../components/FacetLanding.astro';
+import { getProjects, usedTerms } from '../../../lib/content';
+import { filterProjects } from '../../../lib/filter';
+import { emptyState } from '../../../lib/query-state';
+
+// NOTE: the facet key is repeated inside getStaticPaths rather than shared via a
+// module-level const. Astro extracts getStaticPaths into its own chunk at build
+// time, so it cannot close over frontmatter bindings.
+export const getStaticPaths = (async () => {
+  const projects = await getProjects();
+
+  // Only terms that at least one project carries — a landing page listing zero
+  // projects is a soft-404 and should never be emitted.
+  return usedTerms('categories').map((term) => ({
+    params: { slug: term.slug },
+    props: {
+      term,
+      projects: filterProjects(projects, { ...emptyState(), categories: [term.slug] }),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { term, projects } = Astro.props;
+---
+
+<FacetLanding facetKey="categories" term={term} projects={projects} />

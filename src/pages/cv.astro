@@ -1,0 +1,687 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { getJourney, formatRange } from '../lib/journey';
+import { getProjects, facets } from '../lib/content';
+import {
+  SITE,
+  SOCIAL_LINKS,
+  EMAIL,
+  CODECANYON,
+  CV,
+  CV_PROJECT_SLUGS,
+  CV_FEATURED_REPOS,
+  DECLARED_SKILLS,
+} from '../lib/site';
+import reposJson from '../data/repos.json';
+import type { z } from 'zod';
+import type { repoSchema } from '../lib/schemas.mjs';
+
+/**
+ * The CV, generated from the same journey entries the timeline uses.
+ *
+ * Deriving it from `src/content/journey/` means it cannot drift from the site —
+ * correcting an entry updates the timeline and the CV together. It replaces a
+ * hand-maintained PDF frozen in April 2022.
+ *
+ * Layout is a dated-gutter single column: dates in a narrow left rail, content
+ * on the right. It scans quickly on paper, stays parseable by CV screeners
+ * (which cope badly with true multi-column layouts), and holds up at A4.
+ */
+type Repo = z.infer<typeof repoSchema>;
+
+const journey = await getJourney();
+const projects = await getProjects();
+
+// Most recent first. Milestones and one-off projects belong on the site's
+// timeline but would pad a CV, so only real roles appear here.
+const roles = [...journey].filter((entry) => entry.data.kind === 'work').reverse();
+const education = [...journey].filter((entry) => entry.data.kind === 'education').reverse();
+
+// Curated, in Rifat's order — not the catalogue's recency sort.
+const bySlug = new Map(projects.map((project) => [project.slug, project]));
+const selectedProjects = CV_PROJECT_SLUGS.map((slug) => bySlug.get(slug)).filter(
+  (project): project is NonNullable<typeof project> => Boolean(project),
+);
+
+// Surfaced at build time so a slug that never got added in Django admin is
+// noticed, rather than quietly shortening the section.
+const missingProjects = CV_PROJECT_SLUGS.filter((slug) => !bySlug.has(slug));
+if (missingProjects.length > 0) {
+  console.warn(
+    `  [cv] ${missingProjects.length} CV project(s) not in the Django catalogue: ${missingProjects.join(', ')}`,
+  );
+}
+
+const allRepos = reposJson as Repo[];
+const totalStars = allRepos.reduce((sum, repo) => sum + repo.stars, 0);
+
+// Featured repos lead regardless of stars; the rest fill the remaining slots
+// by star count.
+const featured = CV_FEATURED_REPOS.map((name) =>
+  allRepos.find((repo) => repo.name === name),
+).filter((repo): repo is Repo => Boolean(repo));
+const repos = [
+  ...featured,
+  ...allRepos.filter((repo) => repo.stars > 0 && !CV_FEATURED_REPOS.includes(repo.name)),
+].slice(0, 5);
+
+/**
+ * Technologies grouped by role rather than listed flat.
+ *
+ * A single 14-item run of names tells a reader nothing about depth; grouping
+ * shows the shape of the stack at a glance. Anything unrecognised falls into
+ * "Other" so a new taxonomy term in Django admin can never silently vanish.
+ */
+const GROUPS: Array<{ label: string; match: string[] }> = [
+  {
+    label: 'Backend',
+    match: [
+      'django',
+      'django-rest-framework',
+      'django-q',
+      'django-channel',
+      'laravel',
+      'python',
+      'php',
+      'laravel-backpack',
+    ],
+  },
+  {
+    label: 'Frontend',
+    match: ['vue-js', 'react', 'angular', 'typescript', 'bootstrap', 'tailwind-css'],
+  },
+  { label: 'Data', match: ['mysql', 'postgres', 'redis', 'sqlite'] },
+  {
+    label: 'Infrastructure',
+    match: ['digital-ocean', 'ubuntu', 'supervisor', 'github-action', 'aws', 'docker'],
+  },
+  { label: 'Realtime & integrations', match: ['webrtc', 'pusher', 'stripe', 'selenium'] },
+];
+
+// Technologies only. Tags carry domain and deployment labels ("Prescription
+// Software", "Supervisor") which are not skills and were both padding the
+// section and mislabelling themselves as ones.
+const pool = facets.technologies.filter((term) => term.count > 0);
+
+const claimed = new Set<string>();
+const skillGroups = GROUPS.map((group) => {
+  const names = pool
+    .filter((term) => group.match.includes(term.slug))
+    .map((term) => {
+      claimed.add(term.slug);
+      return term.name;
+    });
+  return { label: group.label, names: names as string[] };
+}).filter((group) => group.names.length > 0);
+
+const leftover = pool.filter((term) => !claimed.has(term.slug)).map((term) => term.name);
+if (leftover.length > 0) skillGroups.push({ label: 'Other', names: leftover });
+
+// Merge in the declared skills the project taxonomy cannot express — CI/CD,
+// cloud and methodology. Existing groups are extended in place; new ones are
+// appended, so declaring a new category needs no change here.
+for (const [label, names] of Object.entries(DECLARED_SKILLS)) {
+  const group = skillGroups.find((candidate) => candidate.label === label);
+  if (group) {
+    group.names = [...group.names, ...names.filter((name) => !group.names.includes(name))];
+  } else {
+    skillGroups.push({ label, names });
+  }
+}
+
+// "Other" is a catch-all; it reads better last.
+skillGroups.sort((a, b) => Number(a.label === 'Other') - Number(b.label === 'Other'));
+
+const contactLinks = SOCIAL_LINKS.filter((link) => link.primary && !link.url.startsWith('mailto:'));
+const strip = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title="CV"
+      description={`Curriculum vitae for ${SITE.name} — ${SITE.role}.`}
+      noindex
+    />
+  </head>
+
+  <body class="cv-body">
+    <!-- Screen-only bar. The PDF is a real file built at deploy time, not
+         something the visitor has to generate. -->
+    <div class="no-print mx-auto max-w-4xl px-6 pt-8">
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-4 py-3"
+      >
+        <p class="text-sm text-[var(--text-muted)]">
+          Generated from this site's journey data — always current.
+        </p>
+        <div class="flex items-center gap-2">
+          <a
+            href="/"
+            class="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-strong)]"
+          >
+            ← Back
+          </a>
+          <a
+            href={CV.file}
+            download={CV.filename}
+            class="inline-flex items-center gap-2 rounded-lg bg-[var(--brand)] px-4 py-2 text-sm font-medium text-white"
+          >
+            <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+              <path
+                d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+            Download PDF
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <main class="cv-sheet">
+      <header class="cv-header">
+        <div class="cv-identity">
+          <h1>{SITE.name}</h1>
+          <p class="cv-role">{SITE.role}</p>
+        </div>
+
+        <ul class="cv-contact">
+          <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+          <li><a href={SITE.url}>{strip(SITE.url)}</a></li>
+          {
+            contactLinks.map((link) => (
+              <li>
+                <a href={link.url}>{strip(link.url)}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </header>
+
+      <p class="cv-summary">{SITE.description}</p>
+
+      <section class="cv-section">
+        <h2>Experience</h2>
+
+        {
+          roles.map((entry) => (
+            <article class="cv-row">
+              <div class="cv-gutter">
+                <span class="cv-dates">{formatRange(entry.data)}</span>
+                {entry.data.location && (
+                  <span class="cv-place">
+                    {[entry.data.location.city, entry.data.location.country]
+                      .filter(Boolean)
+                      .join(', ')}
+                    {entry.data.location.remote && ' · remote'}
+                  </span>
+                )}
+              </div>
+
+              <div class="cv-main">
+                <h3>
+                  {entry.data.title}
+                  {entry.data.org && <span class="cv-org"> · {entry.data.org.name}</span>}
+                </h3>
+                <p class="cv-lede">{entry.data.summary}</p>
+
+                {entry.data.highlights.length > 0 && (
+                  <ul class="cv-bullets">
+                    {entry.data.highlights.map((highlight) => (
+                      <li>{highlight}</li>
+                    ))}
+                  </ul>
+                )}
+
+                {entry.data.tech.length > 0 && (
+                  <p class="cv-stack">{entry.data.tech.join(' · ')}</p>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </section>
+
+      <section class="cv-section">
+        <h2>Commercial products</h2>
+        <article class="cv-row">
+          <div class="cv-gutter">
+            <span class="cv-dates">since {CODECANYON.memberSince.split('-')[0]}</span>
+            <span class="cv-place">CodeCanyon</span>
+          </div>
+          <div class="cv-main">
+            <h3>
+              Envato author<span class="cv-org">
+                · {CODECANYON.totalSales} sales · {CODECANYON.rating}★</span
+              >
+            </h3>
+            <p class="cv-lede">
+              Four self-published products, sold and supported directly — installers, documentation
+              and buyer support alongside the code.
+            </p>
+            <ul class="cv-bullets">
+              <li>
+                Dr. Assistant &amp; Dr. Assistant PRO — patient and prescription management
+                (Laravel, Vue)
+              </li>
+              <li>Restulator — restaurant management with integrated POS</li>
+              <li>xPOS — multi-purpose point of sale</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      {
+        repos.length > 0 && (
+          <section class="cv-section">
+            <h2>Open source</h2>
+            <article class="cv-row">
+              <div class="cv-gutter">
+                <span class="cv-dates">{totalStars}★</span>
+                <span class="cv-place">github.com/kmrifat</span>
+              </div>
+              <div class="cv-main">
+                <ul class="cv-repos">
+                  {repos.map((repo) => (
+                    <li>
+                      <span class="cv-repo-name">{repo.name}</span>
+                      <span class="cv-repo-stars">{repo.stars}★</span>
+                      {repo.description && <span class="cv-repo-desc">{repo.description}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          </section>
+        )
+      }
+
+      <section class="cv-section">
+        <h2>Selected projects</h2>
+        <article class="cv-row">
+          <div class="cv-gutter">
+            <span class="cv-dates">{projects.length} total</span>
+            <span class="cv-place">kmrifat.github.io</span>
+          </div>
+          <div class="cv-main">
+            <ul class="cv-projects">
+              {
+                selectedProjects.map((project) => (
+                  <li>
+                    <span class="cv-project-name">{project.name}</span>
+                    {project.shortDescription && (
+                      <span class="cv-project-desc"> — {project.shortDescription}</span>
+                    )}
+                    {project.technologies.length > 0 && (
+                      <span class="cv-stack">
+                        {project.technologies.map((t) => t.name).join(' · ')}
+                      </span>
+                    )}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="cv-section">
+        <h2>Technologies</h2>
+        <dl class="cv-skills">
+          {
+            skillGroups.map((group) => (
+              <div class="cv-skill-row">
+                <dt>{group.label}</dt>
+                <dd>{group.names.join(' · ')}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      {
+        education.length > 0 && (
+          <section class="cv-section">
+            <h2>Education</h2>
+            {education.map((entry) => (
+              <article class="cv-row">
+                <div class="cv-gutter">
+                  <span class="cv-dates">{formatRange(entry.data)}</span>
+                </div>
+                <div class="cv-main">
+                  <h3>
+                    {entry.data.title}
+                    {entry.data.org && <span class="cv-org"> · {entry.data.org.name}</span>}
+                  </h3>
+                  <p class="cv-lede">{entry.data.summary}</p>
+                </div>
+              </article>
+            ))}
+          </section>
+        )
+      }
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  .cv-body {
+    background: var(--surface);
+    color: var(--text-strong);
+  }
+
+  .cv-sheet {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* ---------------------------------------------------------------- header */
+
+  .cv-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--brand);
+  }
+
+  .cv-identity h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .cv-role {
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    color: var(--brand);
+    font-weight: 500;
+  }
+
+  .cv-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  .cv-contact a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .cv-summary {
+    margin-top: 1.1rem;
+    max-width: 46rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  /* --------------------------------------------------------------- section */
+
+  .cv-section {
+    margin-top: 1.9rem;
+  }
+
+  .cv-section > h2 {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* Dated gutter: dates left, content right. Collapses to one column on
+     narrow screens, where a fixed rail would squeeze the text unreadably. */
+  .cv-row {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 1.4rem;
+    margin-top: 1.05rem;
+  }
+
+  @media (max-width: 640px) {
+    .cv-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.35rem;
+    }
+  }
+
+  .cv-gutter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding-top: 0.1rem;
+  }
+
+  .cv-dates {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-strong);
+    font-weight: 500;
+  }
+
+  .cv-place {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+  }
+
+  .cv-main h3 {
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .cv-org {
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .cv-lede {
+    margin-top: 0.3rem;
+    font-size: 0.87rem;
+    line-height: 1.5;
+  }
+
+  .cv-bullets {
+    margin-top: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.22rem;
+  }
+
+  .cv-bullets li {
+    position: relative;
+    padding-left: 0.85rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+  }
+
+  .cv-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.25rem;
+    height: 0.25rem;
+    border-radius: 50%;
+    background: var(--brand);
+  }
+
+  .cv-stack {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+  }
+
+  /* ----------------------------------------------------------- collections */
+
+  .cv-repos,
+  .cv-projects {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .cv-repos li {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .cv-repo-name {
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .cv-repo-stars {
+    margin-left: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--brand);
+  }
+
+  .cv-repo-desc {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  .cv-project-name {
+    font-weight: 600;
+    font-size: 0.87rem;
+  }
+
+  .cv-project-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  .cv-skills {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .cv-skill-row {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 1.4rem;
+  }
+
+  @media (max-width: 640px) {
+    .cv-skill-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.15rem;
+    }
+  }
+
+  .cv-skill-row dt {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  .cv-skill-row dd {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* ----------------------------------------------------------------- print */
+
+  @media print {
+    @page {
+      size: A4;
+      margin: 13mm 14mm 15mm;
+    }
+
+    .no-print {
+      display: none !important;
+    }
+
+    /* Force the light palette whatever the visitor's theme: printing the dark
+       theme wastes toner and reads badly on paper. */
+    :root,
+    :root.dark {
+      --surface: #ffffff;
+      --surface-raised: #ffffff;
+      --surface-sunken: #ffffff;
+      --text-strong: #14110f;
+      --text-muted: #55504c;
+      --border-subtle: #d8d3ce;
+      --brand: #c0350a;
+    }
+
+    /* Tuned to land the CV at three A4 pages rather than four; four pages of
+       body copy is more than most readers will get through. */
+    .cv-body {
+      background: #ffffff;
+      font-size: 9.3pt;
+      line-height: 1.4;
+    }
+
+    .cv-section {
+      margin-top: 1.25rem;
+    }
+
+    .cv-row {
+      margin-top: 0.7rem;
+      gap: 1rem;
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+    }
+
+    .cv-identity h1 {
+      font-size: 1.65rem;
+    }
+
+    .cv-summary {
+      margin-top: 0.8rem;
+    }
+
+    .cv-bullets {
+      gap: 0.12rem;
+    }
+
+    .cv-sheet {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Keep an entry whole across a page boundary, and never strand a heading
+       at the foot of a page. */
+    .cv-skills,
+    .cv-row,
+    .cv-skill-row,
+    .cv-bullets li {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .cv-section > h2 {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .cv-header {
+      break-after: avoid;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+</style>

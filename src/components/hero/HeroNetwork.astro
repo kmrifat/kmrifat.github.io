@@ -1,0 +1,223 @@
+---
+/**
+ * Hero background: a live network graph.
+ *
+ * Nodes drifting with links that form and break as they pass — the visual
+ * language of a distributed system, rather than the floating-confetti particle
+ * field this replaces.
+ *
+ * Deliberately a 2D canvas rather than three.js. A second WebGL context
+ * alongside the journey canvas repeatedly failed to initialise its renderer:
+ * the canvas element mounted but nothing inside it ever rendered, and because
+ * React Three Fiber runs children in its own reconciler root, the error was
+ * swallowed with nothing reaching the console. For a flat 2D effect WebGL buys
+ * nothing anyway — this version is ~2 KB instead of pulling a 226 KB three.js
+ * chunk into the critical path, needs no React island, and is cheap enough to
+ * run on phones. The journey timeline remains genuine three.js, where the 3D
+ * actually earns its cost.
+ *
+ * Still fully optional: the CSS `.hero-wash` gradient underneath is what paints
+ * immediately, so this is never the LCP element and can fail without leaving a
+ * hole.
+ */
+---
+
+<canvas
+  data-hero-network
+  class="pointer-events-none absolute inset-0 size-full"
+  aria-hidden="true"
+  role="presentation"></canvas>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-network]');
+  const context = canvas?.getContext('2d');
+
+  // Respect reduced motion: no canvas work at all, the gradient stands alone.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (canvas && context && !reduced.matches) {
+    const BRAND = [255, 69, 0] as const;
+    const ACCENT = [0, 168, 135] as const;
+
+    /** Node count scales with area so phones don't render a dense mesh. */
+    const density = 1 / 15000;
+    const LINK_DISTANCE = 165;
+
+    interface Node {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      /** 0–1 across the width, fixes the node's hue on the brand ramp. */
+      hue: number;
+      radius: number;
+    }
+
+    let nodes: Node[] = [];
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let dark = document.documentElement.classList.contains('dark');
+    let pointerX = 0;
+    let pointerY = 0;
+    let offsetX = 0;
+    let offsetY = 0;
+    let running = false;
+    let frame = 0;
+
+    // Deterministic, so the layout is the same on every load.
+    let seed = 20260816;
+    const random = () => {
+      seed = (seed * 1664525 + 1013904223) % 4294967296;
+      return seed / 4294967296;
+    };
+
+    const mix = (t: number) =>
+      BRAND.map((c, i) => Math.round(c + (ACCENT[i]! - c) * t)) as unknown as number[];
+
+    function build() {
+      const target = Math.round(Math.min(Math.max(width * height * density, 34), 110));
+      nodes = Array.from({ length: target }, () => {
+        const x = random() * width;
+        return {
+          x,
+          y: random() * height,
+          vx: (random() - 0.5) * 0.22,
+          vy: (random() - 0.5) * 0.22,
+          hue: x / Math.max(width, 1),
+          radius: random() < 0.18 ? 2.6 : 1.5,
+        };
+      });
+    }
+
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width;
+      height = rect.height;
+      canvas!.width = Math.round(width * dpr);
+      canvas!.height = Math.round(height * dpr);
+      context!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+    }
+
+    function draw() {
+      context!.clearRect(0, 0, width, height);
+
+      // Parallax easing — the field leans toward the cursor for depth.
+      offsetX += (pointerX - offsetX) * 0.045;
+      offsetY += (pointerY - offsetY) * 0.045;
+
+      for (const node of nodes) {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        // Wrap rather than bounce: no clustering along the edges.
+        if (node.x < -40) node.x = width + 40;
+        if (node.x > width + 40) node.x = -40;
+        if (node.y < -40) node.y = height + 40;
+        if (node.y > height + 40) node.y = -40;
+      }
+
+      // Links first, so nodes sit on top of their own connections.
+      context!.lineWidth = 1;
+      for (let i = 0; i < nodes.length; i += 1) {
+        const a = nodes[i]!;
+        const ax = a.x + offsetX * (0.4 + a.hue * 0.5);
+        const ay = a.y + offsetY * (0.4 + a.hue * 0.5);
+
+        for (let j = i + 1; j < nodes.length; j += 1) {
+          const b = nodes[j]!;
+          const bx = b.x + offsetX * (0.4 + b.hue * 0.5);
+          const by = b.y + offsetY * (0.4 + b.hue * 0.5);
+
+          const dx = ax - bx;
+          const dy = ay - by;
+          const distance = Math.hypot(dx, dy);
+          if (distance > LINK_DISTANCE) continue;
+
+          // Links dissolve as they stretch rather than popping out.
+          const strength = 1 - distance / LINK_DISTANCE;
+          const [r, g, bl] = mix((a.hue + b.hue) / 2);
+          context!.strokeStyle = `rgba(${r}, ${g}, ${bl}, ${strength * (dark ? 0.5 : 0.34)})`;
+          context!.beginPath();
+          context!.moveTo(ax, ay);
+          context!.lineTo(bx, by);
+          context!.stroke();
+        }
+      }
+
+      for (const node of nodes) {
+        const [r, g, b] = mix(node.hue);
+        context!.fillStyle = `rgba(${r}, ${g}, ${b}, ${dark ? 0.95 : 0.8})`;
+        context!.beginPath();
+        context!.arc(
+          node.x + offsetX * (0.4 + node.hue * 0.5),
+          node.y + offsetY * (0.4 + node.hue * 0.5),
+          node.radius,
+          0,
+          Math.PI * 2,
+        );
+        context!.fill();
+      }
+
+      frame = requestAnimationFrame(draw);
+    }
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      frame = requestAnimationFrame(draw);
+    };
+
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(frame);
+    };
+
+    window.addEventListener('pointermove', (event) => {
+      // Normalised to roughly ±18px of lean, independent of viewport size.
+      pointerX = (event.clientX / window.innerWidth - 0.5) * 36;
+      pointerY = (event.clientY / window.innerHeight - 0.5) * 24;
+    });
+
+    window.addEventListener('resize', () => {
+      resize();
+      sync();
+    });
+
+    /*
+     * Stop entirely when scrolled away or the tab is hidden.
+     *
+     * Deliberately a rect test rather than an IntersectionObserver: the
+     * observer's *initial* callback fired before layout had settled, reported
+     * not-intersecting, and stopped the loop — and because visibility never
+     * subsequently changed, no further callback ever arrived and the animation
+     * stayed dead. A direct measurement has no such race.
+     */
+    const onScreen = () => {
+      const rect = canvas.getBoundingClientRect();
+      return rect.bottom > -120 && rect.top < window.innerHeight + 120;
+    };
+
+    /*
+     * No `document.hidden` check here on purpose. Browsers already suspend
+     * requestAnimationFrame in a background tab, so gating on it was redundant —
+     * and it silently prevented the loop from ever starting in any embedded or
+     * headless context that reports the document as permanently hidden.
+     */
+    const sync = () => (onScreen() ? start() : stop());
+
+    window.addEventListener('scroll', sync, { passive: true });
+
+    // Follow the theme toggle.
+    new MutationObserver(() => {
+      dark = document.documentElement.classList.contains('dark');
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    reduced.addEventListener('change', (event) => (event.matches ? stop() : sync()));
+
+    resize();
+    sync();
+  }
+</script>

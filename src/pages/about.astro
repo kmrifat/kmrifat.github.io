@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import JourneyList from '../components/journey/JourneyList.astro';
+import LegacyHashRedirect from '../components/LegacyHashRedirect.astro';
+import { getJourney } from '../lib/journey';
+import { SITE } from '../lib/site';
+import JsonLd from '../components/JsonLd.astro';
+import { graph, personSchema, profilePageSchema } from '../lib/jsonld';
+
+const entries = await getJourney();
+const hasDrafts = entries.some((entry) => entry.data.draft);
+const aboutSchema = graph(personSchema(), profilePageSchema(entries));
+
+// The text-first counterpart to the home page's 3D timeline: identical content,
+// zero canvas, zero WebGL. Linked from the timeline as "read the text version",
+// and the version worth printing or handing to a screen reader.
+---
+
+<Base
+  title="Journey"
+  description={`How ${SITE.name} went from a student JavaFX project to CTO, Shopify tech lead, and running Binary Castle — a decade of shipped software.`}
+  type="profile"
+>
+  <LegacyHashRedirect slot="head" />
+  <JsonLd slot="head" schema={aboutSchema} />
+
+  <div class="py-12 sm:py-16">
+    <header class="max-w-2xl">
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Journey</h1>
+      <p class="mt-4 text-lg text-pretty text-[var(--text-muted)]">
+        A decade of shipping software — from a JavaFX inventory system built as a student, through
+        four commercial products on CodeCanyon, engineering leadership at Localrydes and Mediusware,
+        and a Shopify app at Debutify, to building my own studio at Binary Castle.
+      </p>
+      <p class="mt-4 text-sm text-[var(--text-muted)]">
+        Prefer it animated? The <a href="/" class="text-[var(--brand)] hover:underline">home page</a
+        > tells the same story as a scroll-driven 3D timeline.
+      </p>
+    </header>
+
+    {
+      hasDrafts && (
+        /*
+          Shown while entries remain derived rather than confirmed. This is a
+          real caveat about accuracy, so it belongs on the page and not only in
+          a code comment.
+        */
+        <aside
+          class="mt-8 max-w-2xl rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--surface-sunken)] p-4 text-sm"
+          role="note"
+        >
+          <p class="font-medium">A couple of details still need confirming</p>
+          <p class="mt-1 text-[var(--text-muted)]">
+            Entries marked <em>unverified</em> have one field I inferred rather than knew — an end
+            date or a job title. Everything else comes from the CV, the public CodeCanyon profile
+            and the GitHub API. See <code>CONTENT.md</code> for the specifics.
+          </p>
+        </aside>
+      )
+    }
+
+    <JourneyList entries={entries} class="mt-12 max-w-3xl" />
+  </div>
+</Base>

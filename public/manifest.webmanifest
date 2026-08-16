@@ -1,0 +1,21 @@
+{
+  "name": "K M Rifat ul Alom — Portfolio",
+  "short_name": "K M Rifat",
+  "description": "Full-stack engineer building web platforms with Django and Laravel — a catalogue of shipped work and the path that led to it.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "en",
+  "background_color": "#0f0e0d",
+  "theme_color": "#ff4500",
+  "icons": [
+    { "src": "/pwa-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/pwa-512x512.png", "sizes": "512x512", "type": "image/png" },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

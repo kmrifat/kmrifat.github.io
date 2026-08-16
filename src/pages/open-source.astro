@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { graph, personSchema } from '../lib/jsonld';
+import { SITE } from '../lib/site';
+import reposJson from '../data/repos.json';
+import type { z } from 'zod';
+import type { repoSchema } from '../lib/schemas.mjs';
+
+type Repo = z.infer<typeof repoSchema>;
+
+const repos = reposJson as Repo[];
+const totalStars = repos.reduce((sum, repo) => sum + repo.stars, 0);
+
+// Grouped by owner so personal work and the Binary Castle organisation read as
+// two distinct bodies of work rather than one undifferentiated list.
+const groups = [
+  {
+    key: 'kmrifat',
+    title: 'Personal',
+    blurb: 'Libraries, tools and experiments published under my own account.',
+    repos: repos.filter((repo) => repo.owner === 'kmrifat'),
+  },
+  {
+    key: 'binary-castle',
+    title: 'Binary Castle',
+    blurb: 'Open-source work from my studio — component libraries and product code.',
+    repos: repos.filter((repo) => repo.owner === 'binary-castle'),
+  },
+].filter((group) => group.repos.length > 0);
+
+const schema = graph(personSchema(), {
+  '@type': 'CollectionPage',
+  url: `${SITE.url}/open-source/`,
+  name: 'Open source',
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: repos.length,
+    itemListElement: repos.map((repo, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: repo.url,
+      name: repo.name,
+    })),
+  },
+});
+
+const fmtDate = (value: string) =>
+  new Date(value).toLocaleDateString('en', { month: 'short', year: 'numeric' });
+---
+
+<Base
+  title="Open source"
+  description={`${repos.length} public repositories — ${totalStars} stars across Flutter, Vue, Django, Laravel and JavaFX.`}
+>
+  <JsonLd slot="head" schema={schema} />
+
+  <div class="py-12 sm:py-16">
+    <header class="max-w-2xl">
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Open source</h1>
+      <p class="mt-4 text-lg text-pretty text-[var(--text-muted)]">
+        {repos.length} public repositories, {totalStars} stars. Star counts and dates come straight from
+        the GitHub API at build time, so they are never stale by more than a day.
+      </p>
+    </header>
+
+    {
+      groups.map((group) => (
+        <section class="mt-14">
+          <h2 class="text-2xl font-semibold tracking-tight">{group.title}</h2>
+          <p class="mt-1.5 text-[var(--text-muted)]">{group.blurb}</p>
+
+          <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+            {group.repos.map((repo) => (
+              <li class="group relative flex flex-col rounded-[var(--radius-card)] border border-[var(--border-subtle)] bg-[var(--surface-raised)] p-5 transition-colors hover:border-[var(--brand)]">
+                <div class="flex items-start justify-between gap-3">
+                  <h3 class="font-mono text-sm font-semibold">
+                    <a
+                      href={repo.url}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      class="after:absolute after:inset-0"
+                    >
+                      {repo.name}
+                    </a>
+                  </h3>
+
+                  {repo.stars > 0 && (
+                    <span
+                      class="flex shrink-0 items-center gap-1 text-xs text-[var(--text-muted)] tabular-nums"
+                      title={`${repo.stars} stars`}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="size-3.5"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" />
+                      </svg>
+                      {repo.stars}
+                    </span>
+                  )}
+                </div>
+
+                {repo.description && (
+                  <p class="mt-2 flex-1 text-sm text-[var(--text-muted)]">{repo.description}</p>
+                )}
+
+                <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-muted)]">
+                  {repo.language && (
+                    <span class="rounded bg-[var(--surface-sunken)] px-1.5 py-0.5 font-medium">
+                      {repo.language}
+                    </span>
+                  )}
+                  <span>Updated {fmtDate(repo.pushedAt)}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Base>

@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+import LegacyHashRedirect from '../components/LegacyHashRedirect.astro';
+import JourneyList from '../components/journey/JourneyList.astro';
+import JourneyCanvas from '../components/journey/JourneyCanvas';
+import HeroNetwork from '../components/hero/HeroNetwork.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getJourney, journeyPositions } from '../lib/journey';
+import { getProjects } from '../lib/content';
+import { cardStyles } from '../lib/card-styles';
+import { SITE, CV } from '../lib/site';
+import JsonLd from '../components/JsonLd.astro';
+import { graph, personSchema, websiteSchema } from '../lib/jsonld';
+import { facets } from '../lib/content';
+
+const entries = await getJourney();
+const positions = journeyPositions(entries);
+
+const nodes = entries.map((entry, index) => ({
+  t: positions[index]!,
+  accent: entry.data.accent,
+  featured: entry.data.featured,
+}));
+
+const projects = await getProjects();
+const featured = projects.slice(0, 3);
+
+// knowsAbout is derived from the technologies actually used across the catalogue,
+// so it stays truthful as the project list changes.
+const knownTech = facets.technologies.filter((t) => t.count > 0).map((t) => t.name);
+const homeSchema = graph(personSchema(knownTech), websiteSchema());
+---
+
+<Base description={SITE.description} fullWidth>
+  <LegacyHashRedirect slot="head" />
+  <JsonLd slot="head" schema={homeSchema} />
+
+  <!--
+    Hero.
+
+    Three layers, deliberately ordered:
+      1. `hero-wash` — a pure CSS gradient. Paints immediately, needs no JS, and
+         is what mobile, no-JS and reduced-motion visitors actually see. It also
+         guarantees the canvas is never the LCP element.
+      2. The WebGL particle field, faded in on top once hydrated.
+      3. A readability scrim, so the headline never fights the background.
+  -->
+  <section class="relative isolate overflow-hidden">
+    <div class="hero-wash pointer-events-none absolute inset-0 -z-20" aria-hidden="true"></div>
+
+    <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+      <HeroNetwork />
+    </div>
+
+    <div class="hero-scrim pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
+
+    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+      <p class="text-sm font-medium tracking-wide text-[var(--brand)] uppercase">{SITE.role}</p>
+      <h1 class="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-balance sm:text-6xl">
+        {SITE.name}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-pretty text-[var(--text-muted)]">
+        {SITE.description}
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a
+          href="/projects/"
+          class="rounded-lg bg-[var(--brand)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          Browse {projects.length} projects
+        </a>
+        <a
+          href="#journey"
+          class="rounded-lg border border-[var(--border-subtle)] px-5 py-3 text-sm font-medium transition-colors hover:bg-[var(--surface-sunken)]"
+        >
+          Scroll the journey
+        </a>
+        <a
+          href={CV.file}
+          download={CV.filename}
+          class="inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-strong)]"
+        >
+          <svg viewBox="0 0 24 24" class="size-4" fill="none" aria-hidden="true">
+            <path
+              d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    The timeline section.
+
+    Structure matters here: the <ol> sits in normal flow and provides all the
+    scroll height, while the canvas pins itself with CSS `position: sticky`.
+    Nothing pins with JavaScript, which is why no scroll library is needed and
+    why native scrolling, find-in-page and keyboard paging all keep working.
+  -->
+  <section id="journey" class="relative mx-auto max-w-6xl px-4 sm:px-6">
+    <header class="max-w-2xl py-10">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">The journey</h2>
+      <p class="mt-3 text-[var(--text-muted)]">
+        Ten years, eight chapters — from a student JavaFX project to running my own studio. Keep
+        scrolling, or <a href="/about/" class="text-[var(--brand)] hover:underline"
+          >read the text version</a
+        > instead.
+      </p>
+    </header>
+
+    <div class="relative lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12">
+      <!--
+        Decorative only. Every word of the journey lives in the <ol> below, so
+        this layer is hidden from assistive technology entirely and never
+        receives pointer events.
+      -->
+      <div
+        class="pointer-events-none sticky top-16 hidden h-[calc(100dvh-4rem)] lg:block"
+        aria-hidden="true"
+        role="presentation"
+      >
+        <JourneyCanvas
+          client:media="(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (pointer: fine)"
+          nodes={nodes}
+          target="[data-journey-list]"
+        />
+      </div>
+
+      <JourneyList entries={entries} class="py-8" />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Recent work</h2>
+      <a href="/projects/" class="text-sm font-medium text-[var(--brand)] hover:underline">
+        All {projects.length} projects →
+      </a>
+    </div>
+
+    <div class={`mt-8 ${cardStyles.grid}`}>
+      {featured.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+</Base>
