@@ -1,0 +1,2103 @@
+[
+  {
+    "id": 16,
+    "name": "XZIT - Social",
+    "slug": "xzit-social",
+    "shortDescription": "Canada based social media platform startup",
+    "description": "A convenient app is designed to help you get the most out of your city. Whether you're looking for a great deal, planning a night out or just looking for something new to do, XZIT mobile app is your one-stop-experience.\r\n\r\nIt's free to download and use, so you can always stay up-to-date on what's going on with your people and plan the next outing.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/xzit-social.png",
+      "alt": "XZIT - Social"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Advertisement",
+        "description": "People can boost their business or event"
+      },
+      {
+        "title": "Instant Messaging",
+        "description": "People can chat with each other"
+      },
+      {
+        "title": "Social Auth",
+        "description": "Social auth helps the user a seamless auth without writing email and password and remembering credentials"
+      },
+      {
+        "title": "Merchant",
+        "description": "Merchant panel for Business people"
+      },
+      {
+        "title": "Posts",
+        "description": "Just like facebook post"
+      },
+      {
+        "title": "Stories",
+        "description": "Just like Facebook or Youtube Stories (short time post)"
+      },
+      {
+        "title": "Events & Invitations",
+        "description": "People can create event and reserve hotel/restaurant for it."
+      },
+      {
+        "title": "Admin Panel",
+        "description": "Customise  Django Admin for flexible and super admin access"
+      },
+      {
+        "title": "OTP & 2FA",
+        "description": "One time password for two factor authentication."
+      },
+      {
+        "title": "Hotel/ Restaurant Reservation",
+        "description": "Hotel / Restaurant Reservation for an event or invitation for a merchant"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "The History",
+        "description": "Previously this app was build in Laravel. It has very few feature on that time. \r\nClient comes to me to convert this application in Django and add more feature (he was a big fan of python). \r\n\r\nI Started with Social Auth and following the old bd so i can keep as much data as possible because the system has some active user already."
+      },
+      {
+        "title": "My Role & Responsibilities",
+        "description": "Their Focus was Mobile App First approach and i've been hired as Django Backend Developer to Build and Provide APIs that will use for Mobile App. \r\n\r\nI started a new fresh project with Django, Django Rest Framework and\r\n- Build Basic Auth\r\n- Implemented Social Auth Using Django All Auth plugin\r\n- Implemented Swager UI for API Documentation\r\n- Implemented Live Chat Module using PyWebSocket\r\n- DB migration from Laravel to Django\r\n- DB modification for new features"
+      },
+      {
+        "title": "Outcomes",
+        "description": "It was took three month to convert the whole application from Laravel to Django\r\nAfter while implemented new features such as Live Chat, Social Auth and many more."
+      },
+      {
+        "title": "Deployment",
+        "description": "I used Github Action for CI/CD, \r\nFor local developed i used Docker.\r\n\r\nCurrently it's deployed at Digital Ocean Droplet"
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xzit-social/Screenshot_2022-10-02_at_10.35.01_PM.png",
+          "alt": "XZIT - Social"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xzit-social/Screenshot_2022-10-02_at_10.36.02_PM.png",
+          "alt": "XZIT - Social"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xzit-social/Screenshot_2022-10-02_at_10.39.42_PM.png",
+          "alt": "XZIT - Social"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xzit-social/Screenshot_2022-10-02_at_10.40.04_PM.png",
+          "alt": "XZIT - Social"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xzit-social/Screenshot_2022-10-02_at_10.40.08_PM.png",
+          "alt": "Dependency"
+        },
+        "title": "Dependency"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xzit-social/Screenshot_2022-10-02_at_10.40.45_PM.png",
+          "alt": "XZIT - Social"
+        },
+        "title": null
+      }
+    ],
+    "buttons": [
+      {
+        "title": "API Doc",
+        "url": "https://xzitserv.xyz/api-doc/",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 2,
+        "name": "Django",
+        "slug": "django"
+      },
+      {
+        "id": 14,
+        "name": "Django Rest Framework",
+        "slug": "django-rest-framework"
+      },
+      {
+        "id": 15,
+        "name": "Django Q",
+        "slug": "django-q"
+      }
+    ],
+    "categories": [
+      {
+        "id": 12,
+        "name": "Social Media Platform",
+        "slug": "social-media-platform"
+      }
+    ],
+    "apis": [
+      {
+        "id": 4,
+        "name": "Google Auth",
+        "slug": "google-auth"
+      },
+      {
+        "id": 5,
+        "name": "Facebook Graph",
+        "slug": "facebook-graph"
+      }
+    ],
+    "tags": [
+      {
+        "id": 3,
+        "name": "Digital Ocean",
+        "slug": "digital-ocean"
+      },
+      {
+        "id": 4,
+        "name": "Ubuntu",
+        "slug": "ubuntu"
+      },
+      {
+        "id": 5,
+        "name": "Supervisor",
+        "slug": "supervisor"
+      },
+      {
+        "id": 6,
+        "name": "Github Action",
+        "slug": "github-action"
+      }
+    ],
+    "searchBlob": "xzit - social canada based social media platform startup advertisement instant messaging social auth merchant posts stories events & invitations admin panel otp & 2fa hotel/ restaurant reservation"
+  },
+  {
+    "id": 15,
+    "name": "Amplify",
+    "slug": "amplify",
+    "shortDescription": "Multi theming e-commerce platform",
+    "description": "It's a Multi Theming E-Commerce Platform which is behave like a CMS (i.e: Magento) but it's very much light weight then any CMS that currently exist. \r\n\r\nThe system is developed for EasyAsk Search (an UK based search engine provider just like Algolia & Elastic Search).",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/Screenshot_2022-10-03_at_1.01.38_AM.png",
+      "alt": "Amplify"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Multi theming",
+        "description": "Support Multi Theme"
+      },
+      {
+        "title": "Interactive Admin Panel",
+        "description": "Highly Flexible and Interactive Admin Panel for handling complex user interaction."
+      },
+      {
+        "title": "Widget Based",
+        "description": "The white website is based on widget and widgets are kind of same as wordpress widget"
+      },
+      {
+        "title": "Plugin Support",
+        "description": "It's support plugins which can be develop by other developer (under development)"
+      },
+      {
+        "title": "EasyAsk Search",
+        "description": "Using EasyAsk Search as it's primary Search Engine"
+      },
+      {
+        "title": "Laravel Valet",
+        "description": "Maintaining CI/CD using Laravel Valet"
+      },
+      {
+        "title": "Ideal for B2B & B2C",
+        "description": "Ideal for B2B business and B2C business"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "History",
+        "description": "The client fast came to build a Magento Product Search Plugin for their clients who choice EasyAsk search for their E-Commerce Search Engine and Magento for E-Commerce Website. \r\n\r\nUnfortunately after occupied by Adobe they removed and prevent all other search engine for product search in Magento except Elastic Search.\r\n\r\nAfter that EasyAsk decided to build an E-Commerce which must need to be support multiple theme so they can provide a complete e-commerce solution to their clients."
+      },
+      {
+        "title": "Research & Development",
+        "description": "Initially EasyAsk was is very hurry coz they were thought they are running back in e-commerce business. \r\nThey asked for a rapid development and ask me to find a better tool to reduce our CRUDing time and spend time on the main part of the application.\r\n\r\nAfter several days of R&D i found Laravel Backpack is very ideal to build this e-commerce in very significant amount of time. Because Backpack taking all the responsibilities to admin ui and CRUD operation."
+      },
+      {
+        "title": "My Responsibilities",
+        "description": "I Got a small team to build this application and as a Team lead my Responsibilities was\r\n- Do all kind of Research for the Amplify\r\n- Find the cost effective and Flexible solution \r\n- Talking to the EasyAsk Management and EasyAsk's client's to get their requirements \r\n- Building Theme for EasyAsk's clients\r\n- Maintain LAMP stack server (mostly valet rest are in AWS)\r\n- Writing widget if new requirement comes\r\n- Writing plugins if client want any\r\n- Guided Team to do code and give them tasks after client's requirements\r\n- Log tracking using Slack\r\n- Server Monitoring"
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-03_at_1.04.26_AM.png",
+          "alt": "Home Page"
+        },
+        "title": "Home Page"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-03_at_1.06.48_AM.png",
+          "alt": "Single Product"
+        },
+        "title": "Single Product"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-03_at_1.07.26_AM.png",
+          "alt": "Product List Page"
+        },
+        "title": "Product List Page"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-03_at_1.07.03_AM.png",
+          "alt": "Cart & Login"
+        },
+        "title": "Cart & Login"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-05_at_9.24.01_PM.png",
+          "alt": "Create Product"
+        },
+        "title": "Create Product"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-05_at_9.25.13_PM.png",
+          "alt": "Product Price"
+        },
+        "title": "Product Price"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/amplify/Screenshot_2022-10-05_at_9.46.26_PM.png",
+          "alt": "Permission Management"
+        },
+        "title": "Permission Management"
+      }
+    ],
+    "buttons": [
+      {
+        "title": "Demo Link",
+        "url": "http://18.209.122.163/",
+        "insecure": true
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 19,
+        "name": "Laravel Backpack",
+        "slug": "laravel-backpack"
+      }
+    ],
+    "categories": [
+      {
+        "id": 3,
+        "name": "E-Commerce",
+        "slug": "e-commerce"
+      }
+    ],
+    "apis": [
+      {
+        "id": 11,
+        "name": "Easyask Search API",
+        "slug": "easyask-search-api"
+      },
+      {
+        "id": 2,
+        "name": "Stripe",
+        "slug": "stripe"
+      }
+    ],
+    "tags": [],
+    "searchBlob": "amplify multi theming e-commerce platform multi theming interactive admin panel widget based plugin support easyask search laravel valet ideal for b2b & b2c"
+  },
+  {
+    "id": 14,
+    "name": "Web Crawling & Screenshot",
+    "slug": "web-crawling-screenshot",
+    "shortDescription": "MultiSite data crawling and Screenshot",
+    "description": "will write later",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/web-crawling-screenshot_XYaDS8L.png",
+      "alt": "Web Crawling & Screenshot"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Feature One",
+        "description": "will write later"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Desccription",
+        "description": "Hello world"
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Source Code",
+        "url": "https://github.com/kmrifat/py_selenium_ss_taker",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 7,
+        "name": "Python",
+        "slug": "python"
+      },
+      {
+        "id": 18,
+        "name": "Selenium",
+        "slug": "selenium"
+      }
+    ],
+    "categories": [
+      {
+        "id": 11,
+        "name": "Crawling",
+        "slug": "crawling"
+      },
+      {
+        "id": 10,
+        "name": "Open Source",
+        "slug": "open-source"
+      }
+    ],
+    "apis": [],
+    "tags": [],
+    "searchBlob": "web crawling & screenshot multisite data crawling and screenshot feature one"
+  },
+  {
+    "id": 13,
+    "name": "Drug Crawling",
+    "slug": "drug-crawling",
+    "shortDescription": "Crawling drugs data from a medicine website in python & selenium",
+    "description": "It was one of my Laravel Project where i needed to store or load some drugs for a demo view.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/Screenshot_2022-10-05_at_10.19.34_PM.png",
+      "alt": "Drug Crawling"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Crawling Pharmaceuticals",
+        "description": "It's call all the Pharmaceuticals form medex.com.bd"
+      },
+      {
+        "title": "Drug Crawling",
+        "description": "It's crawl all companies drugs after crawling the company list."
+      },
+      {
+        "title": "CSV & SQL",
+        "description": "While crawling it also store the data in MySQL and CSV"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "History & Uses",
+        "description": "For some of local clients from BD were looking for all drugs that are available in Bangladesh and put down in their database. \r\nThey want it because they don't have enough time to copy and paste drug from this medex.com site. \r\n\r\nI've started it for full-fill their requirement and i also use the drug list in several different projects."
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/drug-crawling/Screenshot_2022-10-05_at_10.22.00_PM.png",
+          "alt": "Main"
+        },
+        "title": "Main"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/drug-crawling/Screenshot_2022-10-05_at_10.23.08_PM.png",
+          "alt": "CSV Writing"
+        },
+        "title": "CSV Writing"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/drug-crawling/Screenshot_2022-10-05_at_10.23.50_PM.png",
+          "alt": "Drug CSV"
+        },
+        "title": "Drug CSV"
+      }
+    ],
+    "buttons": [
+      {
+        "title": "Source Code",
+        "url": "https://github.com/kmrifat/web_crawling_py_sel",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 7,
+        "name": "Python",
+        "slug": "python"
+      },
+      {
+        "id": 18,
+        "name": "Selenium",
+        "slug": "selenium"
+      }
+    ],
+    "categories": [
+      {
+        "id": 11,
+        "name": "Crawling",
+        "slug": "crawling"
+      }
+    ],
+    "apis": [],
+    "tags": [],
+    "searchBlob": "drug crawling crawling drugs data from a medicine website in python & selenium crawling pharmaceuticals drug crawling csv & sql"
+  },
+  {
+    "id": 12,
+    "name": "SB Form",
+    "slug": "sb-form",
+    "shortDescription": "Dynamic form builder for Vue.js v3",
+    "description": "Started this open source package to prevent rewriting same code for generating form again and again.\r\nInitially i was using it inside my personal packages after while i made it open source so other dev can increase their development performance.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/sb-form.png",
+      "alt": "SB Form"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Basic Fields",
+        "description": "Basic input fields such as input, password, select field"
+      },
+      {
+        "title": "Axios support",
+        "description": "Support Axios in first phase"
+      },
+      {
+        "title": "File Manager",
+        "description": "In build file manager to upload and manage files"
+      },
+      {
+        "title": "lazy select",
+        "description": "Select field support lazy loading via api and it's also support on scroll pagination."
+      },
+      {
+        "title": "Multi Select",
+        "description": "Customise MultiSelect Two box type multi-select"
+      },
+      {
+        "title": "Preloaded Data",
+        "description": "Axios based preloaded support for update from"
+      },
+      {
+        "title": "Proges bar",
+        "description": "build in progress bar which is interact on form behaviour"
+      },
+      {
+        "title": "Validation Support",
+        "description": "Service Side form Validation Support"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Brief History",
+        "description": "Started for my person problem solve\r\nthen i open it in open source community. \r\nIt has advance feature such as chunk file update what is not available in most of the form builder."
+      },
+      {
+        "title": "Outcomes",
+        "description": "After this package i can able to build application in very good manner of time as because i don't need to write any html code to generate form. Plus it's helps to build my application in significant less build size."
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Source Code",
+        "url": "https://github.com/kmrifat/sb-form",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      }
+    ],
+    "categories": [
+      {
+        "id": 9,
+        "name": "Package Development",
+        "slug": "package-development"
+      },
+      {
+        "id": 10,
+        "name": "Open Source",
+        "slug": "open-source"
+      }
+    ],
+    "apis": [],
+    "tags": [],
+    "searchBlob": "sb form dynamic form builder for vue.js v3 basic fields axios support file manager lazy select multi select preloaded data proges bar validation support"
+  },
+  {
+    "id": 11,
+    "name": "Audio & Video Calling Software",
+    "slug": "audio-video-calling-software",
+    "shortDescription": "Audio and video calling application in django",
+    "description": "An Open Source Contribution for Python and Django. Initially i started it as test basis to learn WebRTC then i go further to implement in inside Django.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/audio-video-calling-software.png",
+      "alt": "Audio & Video Calling Software"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Live chat",
+        "description": ""
+      },
+      {
+        "title": "1 to 1 Video Call",
+        "description": ""
+      },
+      {
+        "title": "Message Notification",
+        "description": ""
+      },
+      {
+        "title": "Calling Notificaiton",
+        "description": ""
+      },
+      {
+        "title": "Enable Disable Audio / Video",
+        "description": ""
+      },
+      {
+        "title": "Open Source",
+        "description": ""
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "I started learning WebRTC to end 2 end communication for video streaming.\r\nThen i started implementing it inside Django with Django Channel for WebSocket support."
+      },
+      {
+        "title": "Outcomes",
+        "description": "I got a Open Source licence from Jetbrain after submitting this project as my wonderful collaboration, what i'm using for more open source contribution"
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Source Code",
+        "url": "https://github.com/kmrifat/django_chat",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 2,
+        "name": "Django",
+        "slug": "django"
+      },
+      {
+        "id": 14,
+        "name": "Django Rest Framework",
+        "slug": "django-rest-framework"
+      },
+      {
+        "id": 16,
+        "name": "Django Channel",
+        "slug": "django-channel"
+      },
+      {
+        "id": 17,
+        "name": "WebRTC",
+        "slug": "webrtc"
+      }
+    ],
+    "categories": [
+      {
+        "id": 8,
+        "name": "Video Calling App",
+        "slug": "video-calling-app"
+      }
+    ],
+    "apis": [],
+    "tags": [],
+    "searchBlob": "audio & video calling software audio and video calling application in django live chat 1 to 1 video call message notification calling notificaiton enable disable audio / video open source"
+  },
+  {
+    "id": 10,
+    "name": "HRM",
+    "slug": "hrm",
+    "shortDescription": "A Complete Human Resource Management  System in Django",
+    "description": "A complete ERP solution for Outsource base IT company. \r\nIt's support the company to hire people and seamless employee payroll and hassle free  management  to get more project and client to grow the business. \r\n\r\nThe in build job board does the hiring and hr does the payroll and salary sheet on time.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/hrm.png",
+      "alt": "HRM"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Job Board",
+        "description": ""
+      },
+      {
+        "title": "Salary Sheet",
+        "description": ""
+      },
+      {
+        "title": "Employee Management",
+        "description": ""
+      },
+      {
+        "title": "Compliance",
+        "description": ""
+      },
+      {
+        "title": "Project Management",
+        "description": ""
+      },
+      {
+        "title": "Employee Skill Management",
+        "description": ""
+      },
+      {
+        "title": "Loan Management",
+        "description": ""
+      },
+      {
+        "title": "Payroll",
+        "description": ""
+      },
+      {
+        "title": "Bonus Management",
+        "description": ""
+      },
+      {
+        "title": "Profit Share",
+        "description": ""
+      },
+      {
+        "title": "Leave Management",
+        "description": ""
+      },
+      {
+        "title": "Overtime Management",
+        "description": ""
+      },
+      {
+        "title": "Tax Management",
+        "description": ""
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "Plan was to build something for a rapidly growing IT company to smooth hiring process, payroll , increment , taxation, and all the other HR staff can be done without a person rather then it should be run automatically 24/7."
+      },
+      {
+        "title": "My Role & Responsibility",
+        "description": "The company have some confidential intel’s that why don't like to share without anyone then me, \r\nSo i was the only dev who did all of this all alone. \r\nit was took near 8 month to finish and i did not focus on the UI, so i picked Django Admin to fast forward development. \r\n\r\nI have done\r\n- Database design\r\n- Django admin Customization to get appropriate outcomes that the company wants\r\n- Implement Job board for auto Hire \r\n- Implement Django Q for message queuing and schedule management \r\n- Manage LAMP stack in Digital Ocean Droplet\r\n- Deployment \r\n- Implement CI/CD using github action\r\n- Implement Factory Boy for Data seed\r\n- Query optimisation \r\n- Printable Report Generation\r\n- Advance Permission management  such as a user can only able to edit a particular row only in three days from the created date"
+      },
+      {
+        "title": "Outcomes",
+        "description": "Before this software the company has more then 4 HR, one was the HR head three of them was JR.\r\nAfter this system there is only one HR who is just operating the system and maintain calling."
+      },
+      {
+        "title": "Deployment",
+        "description": "I used Github Action for CI/CD and it's been deployed in Digital Ocean in LAMP Stack"
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_10.54.42_PM.png",
+          "alt": "API Doc"
+        },
+        "title": "API Doc"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_10.58.06_PM.png",
+          "alt": "Salary Sheets"
+        },
+        "title": "Salary Sheets"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.15.10_PM.png",
+          "alt": "Salary Sheet"
+        },
+        "title": "Salary Sheet"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.16.46_PM.png",
+          "alt": "Employees"
+        },
+        "title": "Employees"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.17.44_PM.png",
+          "alt": "PDF Report"
+        },
+        "title": "PDF Report"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.20.50_PM.png",
+          "alt": "Routing"
+        },
+        "title": "Routing"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.20.57_PM.png",
+          "alt": "Dependencies"
+        },
+        "title": "Dependencies"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.21.08_PM.png",
+          "alt": "Salary Sheet"
+        },
+        "title": "Salary Sheet"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/hrm/Screenshot_2022-10-02_at_11.22.14_PM.png",
+          "alt": "Admin modification"
+        },
+        "title": "Admin modification"
+      }
+    ],
+    "buttons": [
+      {
+        "title": "Video Demo",
+        "url": "https://kmrifat.binarycastle.net/admin/portfolio/project/add/",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 2,
+        "name": "Django",
+        "slug": "django"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      }
+    ],
+    "categories": [
+      {
+        "id": 1,
+        "name": "ERP",
+        "slug": "erp"
+      }
+    ],
+    "apis": [
+      {
+        "id": 9,
+        "name": "SMS Api",
+        "slug": "sms-api"
+      },
+      {
+        "id": 10,
+        "name": "Mailgun",
+        "slug": "mailgun"
+      }
+    ],
+    "tags": [
+      {
+        "id": 4,
+        "name": "Ubuntu",
+        "slug": "ubuntu"
+      },
+      {
+        "id": 3,
+        "name": "Digital Ocean",
+        "slug": "digital-ocean"
+      },
+      {
+        "id": 5,
+        "name": "Supervisor",
+        "slug": "supervisor"
+      },
+      {
+        "id": 6,
+        "name": "Github Action",
+        "slug": "github-action"
+      }
+    ],
+    "searchBlob": "hrm a complete human resource management  system in django job board salary sheet employee management compliance project management employee skill management loan management payroll bonus management profit share leave management overtime management tax management"
+  },
+  {
+    "id": 9,
+    "name": "Django Job Board",
+    "slug": "django-job-board",
+    "shortDescription": "Automatic Job Circular and Recruitment System in Django and Django Rest Framework",
+    "description": "An open source collaboration on Python, Django. This job board is not just a place where you can how the available vacancies but also you can manage the applicant. \r\nIt has assessment module to find the best candidate by MCQ, Coding Challenge and Viva. \r\nYou can create your own assessment to sort your best candidate",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/django-job-board.png",
+      "alt": "Django Job Board"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "MCQ Assessment",
+        "description": ""
+      },
+      {
+        "title": "Coding Challenge",
+        "description": ""
+      },
+      {
+        "title": "Reminder Mail",
+        "description": ""
+      },
+      {
+        "title": "SMS Reminder",
+        "description": ""
+      },
+      {
+        "title": "Auto email after pass",
+        "description": ""
+      },
+      {
+        "title": "Enable Next Step Once Pass",
+        "description": ""
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "Started this project to help the HR for remind the candidates that they have an assessment nearby. \r\nThis project started under Mediusware Ltd. then it's turn into community support and get Open Source."
+      },
+      {
+        "title": "My Role",
+        "description": "I was the solo developer to plan, design and develop this entire application. \r\nInitially it was part of the Mediusware HR then it's became a part of Open Source Community. \r\nMy role was \r\n- Plan\r\n- Design the Database\r\n- Implemented Django Admin\r\n- implemented Django Rest framework to Develop APIs\r\n- Implemented Swagger UI for REST API documentation\r\n- Pack into PyPIP to enable others to use it in there django application"
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "https://job.mediusware.com/",
+        "insecure": false
+      },
+      {
+        "title": "Source Code",
+        "url": "https://pypi.org/project/django-job-board/",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 2,
+        "name": "Django",
+        "slug": "django"
+      },
+      {
+        "id": 14,
+        "name": "Django Rest Framework",
+        "slug": "django-rest-framework"
+      },
+      {
+        "id": 15,
+        "name": "Django Q",
+        "slug": "django-q"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      }
+    ],
+    "categories": [
+      {
+        "id": 1,
+        "name": "ERP",
+        "slug": "erp"
+      }
+    ],
+    "apis": [],
+    "tags": [
+      {
+        "id": 6,
+        "name": "Github Action",
+        "slug": "github-action"
+      },
+      {
+        "id": 4,
+        "name": "Ubuntu",
+        "slug": "ubuntu"
+      },
+      {
+        "id": 5,
+        "name": "Supervisor",
+        "slug": "supervisor"
+      }
+    ],
+    "searchBlob": "django job board automatic job circular and recruitment system in django and django rest framework mcq assessment coding challenge reminder mail sms reminder auto email after pass enable next step once pass"
+  },
+  {
+    "id": 8,
+    "name": "TripleChoice",
+    "slug": "triplechoice",
+    "shortDescription": "Customize Mechanical Product in Django and DRF",
+    "description": "The idea was to build a solution for mechanical students who like to build staff in their way for their research project or passion. \r\nThe person behind this project is an American Researcher who has published many books on Mechanical Engineering.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/triplechoice.png",
+      "alt": "TripleChoice"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Customisable Product",
+        "description": ""
+      },
+      {
+        "title": "Customer Panel",
+        "description": ""
+      },
+      {
+        "title": "Moderator panel",
+        "description": ""
+      },
+      {
+        "title": "Admin",
+        "description": ""
+      },
+      {
+        "title": "Registered Supplier",
+        "description": ""
+      },
+      {
+        "title": "Non Registered Supplier",
+        "description": ""
+      },
+      {
+        "title": "Mailgun mailing",
+        "description": ""
+      },
+      {
+        "title": "SMS notification",
+        "description": ""
+      },
+      {
+        "title": "Customisable Role",
+        "description": ""
+      },
+      {
+        "title": "SEO Friendly E-Commerce",
+        "description": ""
+      },
+      {
+        "title": "Auto sort Supplier",
+        "description": ""
+      },
+      {
+        "title": "Mechanical Design Correction",
+        "description": ""
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "This project is bridge between the the mechanical product manufacturer and researcher where the researcher can compare the price by asking quotation by given dimension of a mechanical component. \r\n\r\nIt's also support to fix any mechanical error on the provided mechanical component design."
+      },
+      {
+        "title": "My Role & Responsibilities",
+        "description": "It was a MVP so we decided keep the Django admin at the first phase,\r\nBut while we started  we found that we cannot use the default Django Admin. \r\nWe i use webpack and vue.js to make highly interactive Pages inside Django admin. \r\nI had a team to built this system and i have done the role down bellow \r\n\r\n- Design the database \r\n- Create project structure with pipenv and django-admin\r\n- Enable Vue inside Django using webpack \r\n- Guided the Front end guy to to implement the design using scss in django and django templat e\r\n- Created API using Django Rest Framework\r\n- Customise Customer Authentication"
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "http://triplechoice.com/",
+        "insecure": true
+      }
+    ],
+    "technologies": [
+      {
+        "id": 2,
+        "name": "Django",
+        "slug": "django"
+      },
+      {
+        "id": 14,
+        "name": "Django Rest Framework",
+        "slug": "django-rest-framework"
+      },
+      {
+        "id": 15,
+        "name": "Django Q",
+        "slug": "django-q"
+      }
+    ],
+    "categories": [
+      {
+        "id": 3,
+        "name": "E-Commerce",
+        "slug": "e-commerce"
+      }
+    ],
+    "apis": [
+      {
+        "id": 1,
+        "name": "Paypal",
+        "slug": "paypal"
+      }
+    ],
+    "tags": [
+      {
+        "id": 3,
+        "name": "Digital Ocean",
+        "slug": "digital-ocean"
+      },
+      {
+        "id": 4,
+        "name": "Ubuntu",
+        "slug": "ubuntu"
+      },
+      {
+        "id": 5,
+        "name": "Supervisor",
+        "slug": "supervisor"
+      },
+      {
+        "id": 6,
+        "name": "Github Action",
+        "slug": "github-action"
+      }
+    ],
+    "searchBlob": "triplechoice customize mechanical product in django and drf customisable product customer panel moderator panel admin registered supplier non registered supplier mailgun mailing sms notification customisable role seo friendly e-commerce auto sort supplier mechanical design correction"
+  },
+  {
+    "id": 7,
+    "name": "xPOS",
+    "slug": "xpos",
+    "shortDescription": "Point of sale in Laravel",
+    "description": "It a no plan software, but i found way too many request form github (where i releases many free desktop app). So i decided to make one.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/xpos.png",
+      "alt": "xPOS"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=8nPAGJ_XqOU",
+    "youtubeId": "8nPAGJ_XqOU",
+    "features": [
+      {
+        "title": "Easy Installer",
+        "description": "Easy installer for non tech person to install smoothly in web server"
+      },
+      {
+        "title": "Multi Outlat",
+        "description": "It's support Multiple Outlet with or without interconnection."
+      },
+      {
+        "title": "QR code Order",
+        "description": "Customer can order item by scan a QR code of an Outlet"
+      },
+      {
+        "title": "Printable Report",
+        "description": "Easy to generate printable report to keep the lager"
+      },
+      {
+        "title": "Electronic report",
+        "description": "Excel report to data analysis"
+      },
+      {
+        "title": "Easy POS",
+        "description": "Super User Friendly UX for better POS experience"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "This software has been made by me as a solo developer from sketch to finish. \r\nI have followed MVC and repository pattern to build this software."
+      },
+      {
+        "title": "My Role & Responsibilities",
+        "description": "I have build it as a solo developer, so i have done\r\n- DB Design\r\n- Front end Job using Vue.js and jQuery\r\n- Backend Job using Laravel\r\n- Installer implementation\r\n- Finish and deploy"
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xpos/1._POS.png",
+          "alt": "POS"
+        },
+        "title": "POS"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xpos/Install-admin.png",
+          "alt": "Easy Installer"
+        },
+        "title": "Easy Installer"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/xpos/Products.png",
+          "alt": "Product List"
+        },
+        "title": "Product List"
+      }
+    ],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "http://xpos.binarycastle.net/",
+        "insecure": true
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      }
+    ],
+    "categories": [
+      {
+        "id": 5,
+        "name": "SaaS",
+        "slug": "saas"
+      }
+    ],
+    "apis": [],
+    "tags": [],
+    "searchBlob": "xpos point of sale in laravel easy installer multi outlat qr code order printable report electronic report easy pos"
+  },
+  {
+    "id": 6,
+    "name": "CELT LMS",
+    "slug": "celt-lms",
+    "shortDescription": "Learning management system for CELT",
+    "description": "CELT is a Azerbaijan base English Learning Coaching Centre who came to us to for a LMS in the period of COVID-19. \r\nI have build this solution with a small team of 4 member at Mediusware Ltd. It has Advance IELTS Online MCQ questioning such as Matching Video with text, dropdown questioning and many more.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/celt-lms.png",
+      "alt": "CELT LMS"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Class Management",
+        "description": "Hello"
+      },
+      {
+        "title": "Online Exam",
+        "description": ""
+      },
+      {
+        "title": "Admission Management",
+        "description": ""
+      },
+      {
+        "title": "Payment & Due",
+        "description": ""
+      },
+      {
+        "title": "Live Class",
+        "description": ""
+      },
+      {
+        "title": "Teacher Panel",
+        "description": ""
+      },
+      {
+        "title": "Administration",
+        "description": ""
+      },
+      {
+        "title": "Accounts",
+        "description": ""
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "The product owner comes to us to start it because of COVID-19 for lockdown. To continue business in the education era they decided to manage their entire company in online. \r\nFirstly they was asking for an inbuilt live streaming  system but because of lack of time we had to move to braincert to handle the live streaming."
+      },
+      {
+        "title": "My Role & Responsibilities",
+        "description": "I was leaded a small team of 4 member. My job was to communicate with the client and get the requirement from them, after then i split the requirement into task and distribute it with my team member. \r\n\r\nThe initial database design has been made by me, we have a dedicated front end guy here to do the front work but still i had to create the front end architecture with all the necessary tools such as Vue Router, Vuex and Metarial Vue Library.\r\n\r\nWe had to follow a very strict deadline because due to covid the client is counting losses. \r\nsome time we worked more then 8 hours a day to finish it in time. \r\n\r\nOur dead line was 4 month and we have made our first launch in 3 and half month. \r\nwe also provided APIs with sweager ui so our client can create native mobile up for them.\r\n\r\nIt was a happy ending."
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "https://kmrifat.binarycastle.net/admin/portfolio/project/add/",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      },
+      {
+        "id": 10,
+        "name": "Bootstrap",
+        "slug": "bootstrap"
+      }
+    ],
+    "categories": [
+      {
+        "id": 7,
+        "name": "LMS",
+        "slug": "lms"
+      }
+    ],
+    "apis": [
+      {
+        "id": 8,
+        "name": "Braincert",
+        "slug": "braincert"
+      }
+    ],
+    "tags": [],
+    "searchBlob": "celt lms learning management system for celt class management online exam admission management payment & due live class teacher panel administration accounts"
+  },
+  {
+    "id": 5,
+    "name": "Restulator",
+    "slug": "restulator",
+    "shortDescription": "A complete Restaurant management  system which live kitchen",
+    "description": "Inspired by a local kitchen and converted their kitchen from paper to digital. previously they use paper to take the order by the waiter and send it to kitchen. \r\nAfter this software the kitchen automatically get instant notification that they have a dish to cook.\r\nAlso it's notified the waiter that the dish is cooked and ready to deliver to the table.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/restulator.png",
+      "alt": "Restulator"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=4rRARHPC-_c",
+    "youtubeId": "4rRARHPC-_c",
+    "features": [
+      {
+        "title": "Easy to install",
+        "description": "It has a build in php installer for non tech person to install in web server."
+      },
+      {
+        "title": "Live Kitchen",
+        "description": "Real time dish management between waiter, admin and kitchen so everyone know the state of the dish."
+      },
+      {
+        "title": "Inventory",
+        "description": "Stock and Inventory management system for Restaurant of Restaurant's way."
+      },
+      {
+        "title": "Dish Management",
+        "description": "Dish with recipe, price, image and dish type."
+      },
+      {
+        "title": "Order Management",
+        "description": "Waiter submit the order to admin for approve, approved order goes to kitchen screen to cook."
+      },
+      {
+        "title": "Kitchen Management",
+        "description": "Manage kitchen to whom can cook, whom to change the status of dish."
+      },
+      {
+        "title": "Waiter Management",
+        "description": "Allocate waiter by table to determine which waiter will be at which table."
+      },
+      {
+        "title": "Income report",
+        "description": "Calculate income by number of paid sell"
+      },
+      {
+        "title": "Expense Report",
+        "description": "Generate from the stock and date"
+      },
+      {
+        "title": "Dish Report",
+        "description": "Weekly and Yearly Dish report to change the order or Dish and mark which dish is popular."
+      },
+      {
+        "title": "Waiter Report",
+        "description": "Helps to identify  the best waiter  by the report."
+      },
+      {
+        "title": "Kitchen Report",
+        "description": "Exportable kitchen report to improve kitchen performance"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Intro",
+        "description": "I built this software at 2017 and updated it till 2018,\r\nIt was my first software where i use Laravel Broadcasting and Pusher.\r\nI've learnt Private Channel and Channel Authentication for this project."
+      },
+      {
+        "title": "My Role & Responsibilities",
+        "description": "This project has been done by me as a solo developer form Backend to Frontend. \r\nI've designed the database first then started the backend part first to achieve the gole in time. \r\nThings i've done in order\r\n\r\n- Designed the database \r\n- Implemented Laravel Broadcasting and Pusher Api\r\n- Develop entire application by all my own\r\n- Deploy the software in cPanel\r\n- Keep maintain and supported to the sold items"
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "http://restulator.binarycastle.net/",
+        "insecure": true
+      },
+      {
+        "title": "Buy Link",
+        "url": "http://preview.codecanyon.net/item/restulator-restaurant-management-system-in-laravel-55-with-pusher-and-jquery/full_screen_preview/20732111?_ga=2.250736198.1943168902.1663826695-1569593439.1655694040",
+        "insecure": true
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 13,
+        "name": "Pusher",
+        "slug": "pusher"
+      }
+    ],
+    "categories": [
+      {
+        "id": 1,
+        "name": "ERP",
+        "slug": "erp"
+      }
+    ],
+    "apis": [],
+    "tags": [],
+    "searchBlob": "restulator a complete restaurant management  system which live kitchen easy to install live kitchen inventory dish management order management kitchen management waiter management income report expense report dish report waiter report kitchen report"
+  },
+  {
+    "id": 4,
+    "name": "Dr Assistant Pro",
+    "slug": "dr-assistant-pro",
+    "shortDescription": "A pro software for prescription and apoointment mangement",
+    "description": "Designed for doctors and medical diagnosis centre where many doctors are open chamber to visit the patient. By this software doctors can share their patient with each other, they an able to see the patient medical history such as prescriptions, medical report data, diagnosis status.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/dr-assistant-pro.png",
+      "alt": "Dr Assistant Pro"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=vla8spFi4q4",
+    "youtubeId": "vla8spFi4q4",
+    "features": [
+      {
+        "title": "Multi Doctor",
+        "description": "It's support multiple doctors in a hood"
+      },
+      {
+        "title": "Administration",
+        "description": "It's support admin, assistant and moderator. the admin can control the operations of users."
+      },
+      {
+        "title": "Patient Refer",
+        "description": "Doctor can refer the patient to another doctor with or without sharing their prescriptions"
+      },
+      {
+        "title": "Paper like Prescription",
+        "description": "Support paper like prescription so doctors don't need to spend time on learning curve"
+      },
+      {
+        "title": "Patient Portal",
+        "description": "Patient can register and track their medical history (no way to loss prescription any more)"
+      },
+      {
+        "title": "Appointment",
+        "description": "Patient / Doctors can create / cancel an Appointment by themself.\r\nthey can pick there suitable time by checking the available appointment calendar."
+      },
+      {
+        "title": "Multi Language",
+        "description": "Support Multi Language, and admin can add new language by just couple of step."
+      },
+      {
+        "title": "Prescription Template",
+        "description": "Prescription template can be use in real prescription to rapidly generate prescription."
+      },
+      {
+        "title": "Reports",
+        "description": "Highly customize report generation which can be export in excel and pdf."
+      },
+      {
+        "title": "SEO enable",
+        "description": "It has SEO enable SSR feature that can be use to rank the site in any Search Engine."
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "It's a Pro version of Doctor Assistant Software where Dr Assistant does not supports Multi Doctor here the Pro version in support Multiple doctors and administration."
+      },
+      {
+        "title": "My Role & Responsibility",
+        "description": "It's one of my software that's i'm selling in envato , codecanyon.\r\nI've built it from the sketch to deployment. \r\n- I have done the database design\r\n- The front end design using scss\r\n- Role and permission management design \r\n- Write php based installer for non tech person to install this software to web server"
+      },
+      {
+        "title": "Outcomes",
+        "description": "I've solved over 30 copy of it"
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "http://dap-demo.bcmedico.com/",
+        "insecure": true
+      },
+      {
+        "title": "Buy Link",
+        "url": "https://codecanyon.net/item/dr-assistant-pro-patient-appointment-management-system-in-laravel/24450054",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      },
+      {
+        "id": 10,
+        "name": "Bootstrap",
+        "slug": "bootstrap"
+      }
+    ],
+    "categories": [
+      {
+        "id": 2,
+        "name": "Medical Software",
+        "slug": "medical-software"
+      }
+    ],
+    "apis": [],
+    "tags": [
+      {
+        "id": 1,
+        "name": "Prescription Software",
+        "slug": "prescription-software"
+      }
+    ],
+    "searchBlob": "dr assistant pro a pro software for prescription and apoointment mangement multi doctor administration patient refer paper like prescription patient portal appointment multi language prescription template reports seo enable"
+  },
+  {
+    "id": 3,
+    "name": "JaadCar",
+    "slug": "jaadcar",
+    "shortDescription": "A car reservation software to manage JaadCar Internal Car Reservation what they manage in paper before.",
+    "description": "JaadCar is a vienna based Car Reservation company. In this project i have made their ERP system on Car Reservation. In this software they can provide car price by various services such as Transfer Service, Daily Service and Chaffer Service. \r\n\r\nIt's also have feature called Price on Season which mean in the winter it's has less price on car reservation but in summer when tourist comes a lot it will automatically increases the reservation price.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/jaadcar.png",
+      "alt": "JaadCar"
+    },
+    "videoUrl": null,
+    "youtubeId": null,
+    "features": [
+      {
+        "title": "Transfer Service",
+        "description": "Just like Uber, you can put your current location and destination to make a transfer."
+      },
+      {
+        "title": "Chauffeur Service",
+        "description": "It's a rental service which driver"
+      },
+      {
+        "title": "Rental Service",
+        "description": "You can rent a car for daily or hourly basis."
+      },
+      {
+        "title": "Stripe Payment",
+        "description": "Stripe payment made the payment easy"
+      },
+      {
+        "title": "Season wise price",
+        "description": "The jaddcar corporation can set price by season (i.e: Summer, Spring & Winter)"
+      },
+      {
+        "title": "Insurance",
+        "description": "Support full coverage and half coverage car insurance"
+      },
+      {
+        "title": "Paper Work",
+        "description": "All paper work is Digital, such as car previously damaged or not if damages at where it was damaged."
+      },
+      {
+        "title": "Chauffeur Panel",
+        "description": "Chauffeur has a separate channel, where they can get notified about the reservation and how much they earned."
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "I was my first ever car reservation ERP that i made with a very tiny team (total 3 member). \r\nI've started it at 2018 and it was took six month to complete entire staff from start to finish."
+      },
+      {
+        "title": "Role & Responsibilities",
+        "description": "I was leaded a three person team, \r\nwhere i was responsible to \r\n- Communicate with jaadcar management to get their requirements \r\n- Split the requirements into task\r\n- Distribute the task to my team mates\r\n- Write and solve complex logic\r\n- Write features testing using phpunit and laravel test package \r\n- Create server environment and deploy in server (LAMP stack)"
+      },
+      {
+        "title": "Outcomes",
+        "description": "Before this project i had no idea bout car and tourism in Europe. After this project i knew many staff about tourism in Europe. \r\nI also solved many complex query as the car price was dynamically allocated by the jaadcar corporation, so i had to do relational and db side calculation to produce right amount of correct data."
+      }
+    ],
+    "screenshots": [],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "https://www.jaadcar.com/car-rental/",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      }
+    ],
+    "categories": [
+      {
+        "id": 6,
+        "name": "Reservation",
+        "slug": "reservation"
+      },
+      {
+        "id": 1,
+        "name": "ERP",
+        "slug": "erp"
+      }
+    ],
+    "apis": [
+      {
+        "id": 2,
+        "name": "Stripe",
+        "slug": "stripe"
+      }
+    ],
+    "tags": [
+      {
+        "id": 4,
+        "name": "Ubuntu",
+        "slug": "ubuntu"
+      }
+    ],
+    "searchBlob": "jaadcar a car reservation software to manage jaadcar internal car reservation what they manage in paper before. transfer service chauffeur service rental service stripe payment season wise price insurance paper work chauffeur panel"
+  },
+  {
+    "id": 2,
+    "name": "Localrydes",
+    "slug": "localrydes",
+    "shortDescription": "Vienna based car reservation SaaS software",
+    "description": "A Car reservation SaaS software which is build to make a bridge for the tourist who come across to Europe and looking for a reliable car reservation service by comparing the services, features the vehicle have and price. \r\n\r\nAlso it's support the car owner to put their own price by the service (where uber fix the price over the fleet).",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/localrydes.png",
+      "alt": "Localrydes"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=i5daS5Yovno",
+    "youtubeId": "i5daS5Yovno",
+    "features": [
+      {
+        "title": "City Tour",
+        "description": "City Tour"
+      },
+      {
+        "title": "Airport Transfer",
+        "description": "Airport Transfer"
+      },
+      {
+        "title": "Chauffeur Service",
+        "description": "Chauffeur Service"
+      },
+      {
+        "title": "Hourly & Daily Disposal",
+        "description": "Hourly & Daily Disposal"
+      },
+      {
+        "title": "SaaS",
+        "description": "It's a software as a service for car owner who can register their car by their price not the platform price."
+      },
+      {
+        "title": "Currency Converter",
+        "description": "The system support several currency by currency converter api"
+      },
+      {
+        "title": "Multi Language",
+        "description": "Support multi language in entire website and in email as well."
+      },
+      {
+        "title": "Stripe Connect",
+        "description": "We have used Stripe Connect Api for marketplace payment to disburse payment between the localrydes and localrydes partners (who registered the fleet)"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "It was my first ever remote job.\r\nI was joined as a Team Lead and i have build this software from the sketch to finish with an wonderful small team."
+      },
+      {
+        "title": "My Role",
+        "description": "As a team lead,\r\nMy responsibility was to talk to the project owner the CEO of the company to get the project details, after then i split the requirements into tasks and put the task into jira. \r\n\r\nThe conversation was happened twice in a week, the first conversation was for task/features and second conversation was for the update / progress upon the features."
+      },
+      {
+        "title": "What have i achieved",
+        "description": "As my boss was come to me with 50% of idea so after implementing some of the features it's getting change almost every week after showing the outcomes to him. \r\n\r\nSo i learned Agile Methodologies to handle the tasks, which is boost up my team and we can make the thing done. We have lunched the software in one year."
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.09.10_AM.png",
+          "alt": "Home Page"
+        },
+        "title": "Home Page"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.10.41_AM.png",
+          "alt": "Car filter"
+        },
+        "title": "Car filter"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.16.08_AM.png",
+          "alt": "Booking"
+        },
+        "title": "Booking"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.22.04_AM.png",
+          "alt": "Car listing"
+        },
+        "title": "Car listing"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.22.30_AM.png",
+          "alt": "Car price"
+        },
+        "title": "Car price"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.23.01_AM.png",
+          "alt": "Car other info"
+        },
+        "title": "Car other info"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/localrydes/Screenshot_2022-10-06_at_12.25.14_AM.png",
+          "alt": "Dashboard"
+        },
+        "title": "Dashboard"
+      }
+    ],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "https://localrydes.com/",
+        "insecure": false
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      }
+    ],
+    "categories": [
+      {
+        "id": 5,
+        "name": "SaaS",
+        "slug": "saas"
+      }
+    ],
+    "apis": [
+      {
+        "id": 2,
+        "name": "Stripe",
+        "slug": "stripe"
+      },
+      {
+        "id": 3,
+        "name": "Google Map",
+        "slug": "google-map"
+      }
+    ],
+    "tags": [
+      {
+        "id": 3,
+        "name": "Digital Ocean",
+        "slug": "digital-ocean"
+      },
+      {
+        "id": 4,
+        "name": "Ubuntu",
+        "slug": "ubuntu"
+      },
+      {
+        "id": 5,
+        "name": "Supervisor",
+        "slug": "supervisor"
+      }
+    ],
+    "searchBlob": "localrydes vienna based car reservation saas software city tour airport transfer chauffeur service hourly & daily disposal saas currency converter multi language stripe connect"
+  },
+  {
+    "id": 1,
+    "name": "Dr Assistant",
+    "slug": "dr-assistant",
+    "shortDescription": "Patient and Prescription Management System in Laravel",
+    "description": "Designed for doctors, who like to change the habit of writing prescriptions from paper to digital but don't like to stuck in learning curve. \r\n\r\nWriting prescription in this software will give you the same feeling as you written in paper and pen.",
+    "featureImage": {
+      "src": null,
+      "status": "missing",
+      "origin": "https://kmrifat.binarycastle.net/media/dr-assistant_yJu3eCE.png",
+      "alt": "Dr Assistant"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=mQXUvTy3n3Y",
+    "youtubeId": "mQXUvTy3n3Y",
+    "features": [
+      {
+        "title": "Easy Installation",
+        "description": "Build in UI based easy installer"
+      },
+      {
+        "title": "Doctor Website",
+        "description": "In Build Website for Doctor where doctor can show their appointment details"
+      },
+      {
+        "title": "Appointment",
+        "description": "in build Easy appointment and Scheduling System"
+      },
+      {
+        "title": "Medical History",
+        "description": "Doctor can keep patients medical history, such as medical files & prescriptions"
+      },
+      {
+        "title": "Easy Prescription",
+        "description": "Easy to write perspiration, where you can write or use previously written prescription in just a click"
+      },
+      {
+        "title": "Reports",
+        "description": "Nice Reporting on Appointments, Prescriptions, Drugs and many more"
+      }
+    ],
+    "contexts": [
+      {
+        "title": "Introduction",
+        "description": "I've started this project almost five years ago, and it was my first ever project that i build with Laravel.\r\nI was inspired by a local doctor who eagerly liked to have a prescription writing software so he can keep track of his written prescription, as because the patients oftenly forget to bring the old prescriptions on doctors appointment."
+      },
+      {
+        "title": "Challenges",
+        "description": "As i was my first ever project.\r\nI was suffer with scheduling and appointment.\r\nstarting with complex Date Time thing was very difficult to me as a newbee."
+      },
+      {
+        "title": "Outcomes",
+        "description": "I started learning php date function, then found Laravel Carbon which is way more powerful and well documented. \r\n\r\nUsing Carbon Library makes my life easy to make the thing done."
+      },
+      {
+        "title": "Conclusion",
+        "description": "Started it for the local doctors then standardised it for international version, the outcomes was pretty awesome. It my best selling application in codecanyon and i have so many Customization for several customers i have from envato market"
+      }
+    ],
+    "screenshots": [
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/dr-assistant/0.1.Install.png",
+          "alt": "Dr Assistant"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/dr-assistant/02._Appointmnet_Schedule.png",
+          "alt": "Scheduleing"
+        },
+        "title": "Scheduleing"
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/dr-assistant/06._dashboard.png",
+          "alt": "Dr Assistant"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/dr-assistant/07.1._create_new_prescription.png",
+          "alt": "Dr Assistant"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/dr-assistant/07.2.prescription_print.png",
+          "alt": "Dr Assistant"
+        },
+        "title": null
+      },
+      {
+        "image": {
+          "src": null,
+          "status": "missing",
+          "origin": "https://kmrifat.binarycastle.net/media/screenshots/dr-assistant/13.Appointment_Today.png",
+          "alt": "Dr Assistant"
+        },
+        "title": null
+      }
+    ],
+    "buttons": [
+      {
+        "title": "Live Link",
+        "url": "http://preview.codecanyon.net/item/drassistant-patient-and-prescription-management-system-in-laravel/full_screen_preview/20260606?_ga=2.132501646.1872835142.1663434602-1569593439.1655694040",
+        "insecure": true
+      },
+      {
+        "title": "Documentation",
+        "url": "http://drassistant-doc.binarycastle.net/",
+        "insecure": true
+      }
+    ],
+    "technologies": [
+      {
+        "id": 1,
+        "name": "Laravel",
+        "slug": "laravel"
+      },
+      {
+        "id": 3,
+        "name": "Vue.js",
+        "slug": "vue-js"
+      },
+      {
+        "id": 12,
+        "name": "MySQL",
+        "slug": "mysql"
+      }
+    ],
+    "categories": [
+      {
+        "id": 2,
+        "name": "Medical Software",
+        "slug": "medical-software"
+      }
+    ],
+    "apis": [],
+    "tags": [
+      {
+        "id": 1,
+        "name": "Prescription Software",
+        "slug": "prescription-software"
+      },
+      {
+        "id": 2,
+        "name": "Appointment Software",
+        "slug": "appointment-software"
+      }
+    ],
+    "searchBlob": "dr assistant patient and prescription management system in laravel easy installation doctor website appointment medical history easy prescription reports"
+  }
+]

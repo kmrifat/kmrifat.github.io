@@ -1,0 +1,18 @@
+---
+// Runs before first paint, so the theme is correct on the very first frame and
+// there is no flash of the wrong background. Must stay inline and un-deferred.
+---
+
+<script is:inline>
+  (function () {
+    try {
+      var stored = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (e) {
+      /* private mode / storage disabled — fall through to the light default */
+    }
+  })();
+</script>

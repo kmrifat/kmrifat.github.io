@@ -1,0 +1,36 @@
+---
+// The 2022 site was hash-routed (`/#/project/xpos`). A server never sees a
+// fragment, so links people saved or shared can only be rescued on the client.
+// This runs pre-paint on `/` and the 404 page, where those links land.
+---
+
+<script is:inline>
+  (function () {
+    var hash = window.location.hash;
+    if (hash.indexOf('#/') !== 0) return;
+
+    var raw = hash.slice(1); // "/projects?technologies=Django,Vue.js"
+    var qIndex = raw.indexOf('?');
+    var path = (qIndex === -1 ? raw : raw.slice(0, qIndex)).replace(/\/+$/, '');
+    var query = qIndex === -1 ? '' : raw.slice(qIndex);
+
+    var target = null;
+    if (path === '' || path === '/') {
+      target = '/';
+    } else if (path === '/about') {
+      target = '/about/';
+    } else if (path === '/projects') {
+      target = '/projects/';
+    } else if (path.indexOf('/project/') === 0) {
+      var slug = path.slice('/project/'.length);
+      // Only accept slug-shaped values; anything else falls through to the 404 page.
+      if (/^[a-z0-9-]+$/i.test(slug)) target = '/projects/' + slug + '/';
+    }
+
+    // The query string is carried through verbatim — the explorer's parser
+    // accepts the legacy comma-joined display names as well as the new slugs.
+    if (target && target !== window.location.pathname) {
+      window.location.replace(target + query);
+    }
+  })();
+</script>

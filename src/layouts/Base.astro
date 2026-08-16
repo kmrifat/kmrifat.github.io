@@ -1,0 +1,31 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Analytics from '../components/Analytics.astro';
+import type { SeoInput } from '../lib/seo';
+
+type Props = SeoInput & {
+  /** Wide pages (the catalogue) opt out of the default prose-width container. */
+  fullWidth?: boolean;
+};
+
+const { fullWidth = false, ...seo } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead {...seo} />
+    <slot name="head" />
+  </head>
+  <body class="min-h-dvh">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Header />
+    <main id="main" class={fullWidth ? '' : 'mx-auto max-w-6xl px-4 sm:px-6'}>
+      <slot />
+    </main>
+    <Footer />
+    <Analytics />
+  </body>
+</html>

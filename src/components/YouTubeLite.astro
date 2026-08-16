@@ -1,0 +1,58 @@
+---
+import { youtubeEmbedUrl, youtubeThumbnail } from '../../scripts/lib/youtube.mjs';
+
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+
+// Click-to-load facade. Embedding the iframe directly would pull ~1 MB of
+// YouTube player JS and set third-party cookies on every page view, for a video
+// most visitors never play.
+---
+
+<div
+  class="relative aspect-video overflow-hidden rounded-[var(--radius-card)] bg-black"
+  data-youtube={id}
+  data-embed={youtubeEmbedUrl(id)}
+>
+  <img
+    src={youtubeThumbnail(id)}
+    alt=""
+    width="480"
+    height="360"
+    loading="lazy"
+    class="size-full object-cover"
+  />
+  <button
+    type="button"
+    class="absolute inset-0 grid place-items-center bg-black/25 transition-colors hover:bg-black/10"
+    aria-label={`Play video: ${title}`}
+  >
+    <span
+      class="grid h-16 w-24 place-items-center rounded-2xl bg-black/75 transition-transform hover:scale-105"
+    >
+      <svg viewBox="0 0 24 24" class="size-8 text-white" fill="currentColor" aria-hidden="true">
+        <path d="M8 5.5v13l11-6.5z"></path>
+      </svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-youtube]').forEach((container) => {
+    const button = container.querySelector('button');
+    button?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `${container.dataset.embed}&autoplay=1`;
+      iframe.title = button.getAttribute('aria-label') ?? 'Video';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'absolute inset-0 size-full';
+      container.replaceChildren(iframe);
+    });
+  });
+</script>

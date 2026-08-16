@@ -1,0 +1,160 @@
+name: Build and deploy
+
+# The only workflow that publishes. Content sync lives here rather than in its
+# own workflow on purpose: a push made with GITHUB_TOKEN does not trigger other
+# workflows, so a separate sync job could commit a snapshot that never got
+# built. Syncing and building in one run avoids that entirely.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      sync:
+        description: 'Pull fresh content from the Django API and GitHub first'
+        type: boolean
+        default: true
+  # Safety net in case a webhook is ever missed.
+  schedule:
+    - cron: '17 3 * * *'
+  # Fired by the Django admin when project content changes.
+  repository_dispatch:
+    types: [content-updated]
+
+permissions:
+  contents: write # the sync step commits the refreshed snapshot back to main
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  # Never cancel mid-upload — a half-uploaded artifact is worse than a slow deploy.
+  cancel-in-progress: false
+
+env:
+  # Matches the `engines.node` floor declared by astro@7. Pinning stops CI from
+  # silently drifting ahead of what the project claims to support.
+  NODE_VERSION: '22.12'
+
+jobs:
+  build:
+    # The sync step pushes a commit back to main. Without this guard that push
+    # would retrigger the workflow forever. `head_commit` is null on schedule and
+    # repository_dispatch, where contains() is false and the job runs normally.
+    if: ${{ !contains(github.event.head_commit.message, '[skip-deploy]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      # Content is refreshed on scheduled and dispatched runs only. A plain code
+      # push builds from the committed snapshot, so code changes stay
+      # reproducible and never pick up unrelated content drift.
+      - name: Sync content from the Django API and GitHub
+        id: sync
+        if: ${{ github.event_name != 'push' && inputs.sync != false }}
+        run: npm run sync
+        env:
+          API_BASE: ${{ vars.API_BASE || 'https://kmrifat.binarycastle.net/api' }}
+          # Without this the open-source sync is unauthenticated: 60 requests an
+          # hour shared across every job on the runner's IP, which rate-limits
+          # in practice. The default token is enough for public reads.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit refreshed snapshot
+        if: ${{ steps.sync.outputs.sync_changed == 'true' }}
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/data src/assets/remote
+          git commit -m 'chore: sync content from API [skip-deploy]'
+          # main may have moved while this run was queued.
+          git pull --rebase --autostash origin ${{ github.ref_name }}
+          git push origin HEAD:${{ github.ref_name }}
+
+      # `npm run build` also renders /cv/ to PDF via headless Chrome, which the
+      # runner image ships preinstalled. If it ever disappears that step warns
+      # and skips rather than failing — /cv/ stays available as HTML.
+      - name: Build
+        run: npm run build
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+
+      # Publication gate — refuses to ship an empty or structurally broken dist/.
+      - name: Verify build output
+        run: npm run verify
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Step outputs are not visible to other jobs unless re-exported here.
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Confirms the deploy actually serves the site, rather than trusting that a
+  # green upload means a working page. Catches Pages-side failures — a wrong
+  # build type, a stuck CDN, a broken base path — that never touch the build.
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check the live site
+        env:
+          BASE: ${{ needs.deploy.outputs.page_url || 'https://kmrifat.github.io/' }}
+        run: |
+          set -euo pipefail
+          base="${BASE%/}"
+
+          # Pages purges its CDN asynchronously; give it a moment to settle.
+          sleep 20
+
+          fail=0
+          check() {
+            local path="$1" needle="$2"
+            local url="$base$path"
+            local code
+            code=$(curl -sS -o /tmp/body -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            if [ "$code" != "200" ]; then
+              echo "::error::$url returned $code"
+              fail=1
+              return
+            fi
+            if ! grep -q "$needle" /tmp/body; then
+              echo "::error::$url is missing expected content: $needle"
+              fail=1
+              return
+            fi
+            echo "  ok  $url"
+          }
+
+          check "/"                 "K M Rifat"
+          check "/projects/"        "data-project="
+          check "/about/"           "Journey"
+          check "/open-source/"     "github.com"
+          check "/cv/"              "Experience"
+          check "/sitemap-index.xml" "sitemap"
+          check "/robots.txt"       "Sitemap:"
+
+          # The kill switch must stay reachable at exactly this path, or anyone
+          # still carrying the 2022 service worker keeps getting the old site.
+          check "/sw.js"            "unregister"
+
+          exit $fail

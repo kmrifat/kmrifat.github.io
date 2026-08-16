@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import LegacyHashRedirect from '../components/LegacyHashRedirect.astro';
+
+// GitHub Pages serves this file for any unmatched path. It also carries the
+// legacy hash shim, because an old `/#/project/xpos` link that arrives at an
+// unknown path still needs rescuing here.
+---
+
+<Base title="Page not found" noindex>
+  <LegacyHashRedirect slot="head" />
+
+  <section class="py-24 sm:py-32">
+    <p class="font-mono text-sm text-[var(--brand)]">404</p>
+    <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">This page doesn't exist</h1>
+    <p class="mt-4 max-w-xl text-[var(--text-muted)]">
+      The link may be out of date. The site was rebuilt in 2026 and some older URLs have moved.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a
+        href="/projects/"
+        class="rounded-lg bg-[var(--brand)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+      >
+        Browse projects
+      </a>
+      <a
+        href="/"
+        class="rounded-lg border border-[var(--border-subtle)] px-5 py-3 text-sm font-medium transition-colors hover:bg-[var(--surface-sunken)]"
+      >
+        Go home
+      </a>
+    </div>
+  </section>
+</Base>

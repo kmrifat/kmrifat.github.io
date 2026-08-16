@@ -1,0 +1,236 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode. The toggle writes `.dark` onto <html> before first paint
+   (see ThemeScript.astro), so there is no flash. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Brand — carried over from the 2022 site's Tailwind config, where `primary` was
+     rgb(255 69 0) and `success` was rgb(0 168 135). Everything else is derived. */
+  --color-brand-50: #fff3ed;
+  --color-brand-100: #ffe3d4;
+  --color-brand-200: #ffc2a8;
+  --color-brand-300: #ff9770;
+  --color-brand-400: #ff6a38;
+  --color-brand-500: #ff4500;
+  --color-brand-600: #f02f00;
+  --color-brand-700: #c72002;
+  --color-brand-800: #9e1c0b;
+  --color-brand-900: #7f1a0c;
+
+  --color-accent-50: #eafff8;
+  --color-accent-100: #cdfeed;
+  --color-accent-200: #9ffbdd;
+  --color-accent-300: #61f2ca;
+  --color-accent-400: #23e0b2;
+  --color-accent-500: #00a887;
+  --color-accent-600: #009375;
+  --color-accent-700: #007560;
+  --color-accent-800: #045c4d;
+  --color-accent-900: #054c41;
+
+  /* Neutrals — very slightly warm so they sit with the orange rather than fight it. */
+  --color-ink-50: #faf9f8;
+  --color-ink-100: #f3f1ef;
+  --color-ink-200: #e7e3df;
+  --color-ink-300: #d3cdc7;
+  --color-ink-400: #a29a93;
+  --color-ink-500: #78706a;
+  --color-ink-600: #5a5450;
+  --color-ink-700: #443f3c;
+  --color-ink-800: #2a2725;
+  --color-ink-900: #1a1817;
+  --color-ink-950: #0f0e0d;
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+
+  --radius-card: 0.875rem;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Semantic surface tokens. Defined once per theme so components never branch on
+   dark: for colour — they just use var(--surface) etc. */
+@layer base {
+  :root {
+    --surface: var(--color-ink-50);
+    --surface-raised: #ffffff;
+    --surface-sunken: var(--color-ink-100);
+    --border-subtle: var(--color-ink-200);
+    --text-strong: var(--color-ink-900);
+    --text-muted: var(--color-ink-500);
+    --brand: var(--color-brand-500);
+    --accent: var(--color-accent-500);
+
+    color-scheme: light;
+  }
+
+  .dark {
+    --surface: var(--color-ink-950);
+    --surface-raised: var(--color-ink-900);
+    --surface-sunken: #0a0908;
+    --border-subtle: var(--color-ink-800);
+    --text-strong: var(--color-ink-100);
+    --text-muted: var(--color-ink-400);
+    --brand: var(--color-brand-400);
+    --accent: var(--color-accent-400);
+
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Anchored headings clear the sticky header. */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-strong);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Global reduced-motion reset. The 3D island is gated separately at the
+     `client:media` level so three.js is never even downloaded — this covers
+     everything else (CSS reveals, smooth scroll, transitions). */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Scroll-driven reveal for journey entries and cards. Uses native
+     `animation-timeline: view()` — compositor-driven, zero JS, and simply
+     inert in browsers that don't support it (content stays visible). */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal-on-scroll {
+        animation: reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 5% cover 28%;
+      }
+    }
+  }
+
+  @keyframes reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /*
+   * Hero background wash.
+   *
+   * Three offset radial gradients in the brand hues. This is the layer that
+   * actually paints for mobile, no-JS and reduced-motion visitors, and it is
+   * what stops the WebGL canvas from ever being the LCP element — the hero has
+   * its full visual weight before any JavaScript runs.
+   */
+  .hero-wash {
+    background:
+      radial-gradient(
+        58rem 32rem at 12% 18%,
+        color-mix(in oklab, var(--color-brand-500) 30%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        46rem 28rem at 88% 8%,
+        color-mix(in oklab, var(--color-accent-500) 28%, transparent),
+        transparent 68%
+      ),
+      radial-gradient(
+        40rem 30rem at 62% 92%,
+        color-mix(in oklab, var(--color-brand-400) 14%, transparent),
+        transparent 72%
+      );
+  }
+
+  .dark .hero-wash {
+    background:
+      radial-gradient(
+        58rem 32rem at 12% 18%,
+        color-mix(in oklab, var(--color-brand-500) 30%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        46rem 28rem at 88% 8%,
+        color-mix(in oklab, var(--color-accent-500) 26%, transparent),
+        transparent 68%
+      ),
+      radial-gradient(
+        40rem 30rem at 62% 92%,
+        color-mix(in oklab, var(--color-brand-600) 22%, transparent),
+        transparent 72%
+      );
+  }
+
+  /*
+   * Readability scrim. The headline sits on top of moving particles, so the
+   * background is faded toward the page surface behind the text column and
+   * allowed to bleed at the edges.
+   */
+  .hero-scrim {
+    /*
+     * Kept deliberately light. An earlier, heavier version flattened the whole
+     * left half of the hero and undid the effect it was meant to protect —
+     * the headline is near-black on a light surface, so it does not need much
+     * help to stay readable.
+     */
+    background: linear-gradient(
+      100deg,
+      color-mix(in oklab, var(--surface) 86%, transparent) 0%,
+      color-mix(in oklab, var(--surface) 58%, transparent) 26%,
+      color-mix(in oklab, var(--surface) 14%, transparent) 46%,
+      transparent 64%
+    );
+  }
+
+  /* Horizontal scroll without a visible scrollbar, for the compact nav. */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: var(--surface-raised);
+    color: var(--text-strong);
+    border-radius: 0 0 var(--radius-card) 0;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+}

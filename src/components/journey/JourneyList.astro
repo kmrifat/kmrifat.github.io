@@ -1,0 +1,20 @@
+---
+import type { JourneyItem } from '../../lib/journey';
+import JourneyEntry from './JourneyEntry.astro';
+
+interface Props {
+  entries: JourneyItem[];
+  class?: string;
+}
+
+const { entries, class: className = '' } = Astro.props;
+
+// This ordered list is the single source of truth for the journey. It provides
+// the scroll height that drives the 3D scene, it is the entire accessibility
+// tree for that section, and it is what a crawler or a no-JS visitor reads.
+// The canvas never contains text.
+---
+
+<ol class={`journey-list ${className}`} data-journey-list>
+  {entries.map((entry, index) => <JourneyEntry entry={entry} index={index} />)}
+</ol>

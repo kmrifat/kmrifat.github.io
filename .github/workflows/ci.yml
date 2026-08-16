@@ -1,0 +1,72 @@
+name: CI
+
+# Runs on pull requests and on any branch that isn't main. Deliberately never
+# deploys — publishing is deploy.yml's job alone.
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # One run per branch; a superseded push has nothing worth finishing.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Formatting
+        run: npx prettier --check .
+
+      - name: Types
+        run: npm run check
+
+      # Unit tests only. The parity suite in filter.parity.test.ts talks to the
+      # live Django API and skips itself when unreachable, so a backend outage
+      # can never redden an unrelated pull request.
+      - name: Tests
+        run: npx vitest run
+
+      # Builds from the committed snapshot — no API access — so this stays green
+      # even when the Django box is down.
+      - name: Build
+        run: npm run build
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+
+      - name: Verify build output
+        run: npm run verify
+
+      # Advisory only. A stale snapshot is not a reason to block a code change;
+      # the nightly sync in deploy.yml refreshes it on its own.
+      - name: Content snapshot freshness
+        continue-on-error: true
+        run: npm run sync -- --check
+        env:
+          API_BASE: ${{ vars.API_BASE || 'https://kmrifat.binarycastle.net/api' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Kept for inspection when a build looks wrong — the rendered CV is the
+      # easiest artifact to eyeball.
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cv-pdf
+          path: dist/cv/*.pdf
+          if-no-files-found: ignore
+          retention-days: 7
