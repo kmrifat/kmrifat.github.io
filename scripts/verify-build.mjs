@@ -13,7 +13,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
-import { DEFAULT_PAGE_SIZE } from '../src/lib/types.ts';
+import { DEFAULT_PAGE_SIZE } from '../src/lib/pagination.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');

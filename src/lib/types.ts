@@ -40,15 +40,6 @@ export const ORDERINGS: ReadonlyArray<{ value: Ordering; label: string }> = [
 
 export const DEFAULT_ORDERING: Ordering = '-id';
 
-/**
- * Deliberately larger than the catalogue (16 projects today).
- *
- * The island is server-rendered, so whatever the first page shows is what ends
- * up in the static HTML that crawlers and no-JS visitors get. A default of 12
- * would silently drop 4 projects out of that HTML — pages 2+ only exist once
- * JavaScript runs. Showing everything on one page keeps the static document
- * complete, and pagination still engages automatically if the catalogue grows
- * past this number or the visitor passes an explicit `?page_size=`.
- */
-export const DEFAULT_PAGE_SIZE = 24;
-export const MAX_PAGE_SIZE = 100;
+// Defined in .mjs so the Node build scripts can import them too — see the note
+// in pagination.mjs.
+export { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from './pagination.mjs';
