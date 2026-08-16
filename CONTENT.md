@@ -5,19 +5,19 @@ GitHub API — not inferred from project IDs. Four things are still open.
 
 ---
 
-## 1. Two unverified fields (blocking the "Unverified" badges)
+## 1. One unverified field (blocking the "Unverified" badge)
 
-Only two entries carry `draft: true`, each for one specific reason:
+One entry still carries `draft: true`:
 
 **`src/content/journey/2020-mediusware-cto.md` — end date.**
 Your CV is dated April 2022 and still lists CTO as current; Debutify starts
 October 2022. I set `end: '2022-09'` as the assumption. Correct it, then delete
 the `draft: true` line and the blockquote at the bottom.
 
-**`src/content/journey/2024-binary-castle.md` — your title.**
-I described it as "Building Binary Castle" and called it your own studio, inferred
-from the org and the `binarycastle.net` domain. Set the title you actually want —
-Founder, CTO, Principal Engineer — then remove `draft: true`.
+~~**`src/content/journey/2024-binary-castle.md` — your title.**~~ Resolved: it's
+**Founder**, and you confirmed Binary Castle is your own company running since
+2017, not a 2024 studio. The file is now `2017-binary-castle.md`, starts
+`2017-07`, and no longer draft.
 
 Removing `draft: true` does three things: drops the badge, drops the `c.` date
 prefix, and lets the entry into the `ProfilePage` structured data as
@@ -66,9 +66,9 @@ generated one runs through Binary Castle and contains none of that — verified.
 
 Two consequences of the entries that are still `draft: true`:
 
-- The CV prints **"c. 2020 — 2022"** for Mediusware and **"c. 2024 — present"** for
-  Binary Castle. The `c.` is the unverified-date marker. It is honest, but it reads
-  oddly on a CV — removing `draft: true` removes it.
+- The CV prints **"c. 2020 — 2022"** for Mediusware. The `c.` is the
+  unverified-date marker. It is honest, but it reads oddly on a CV — removing
+  `draft: true` removes it. Binary Castle no longer carries it.
 - **AR Proactive is absent entirely**, because I still have no title or dates for
   it. The CV currently jumps from Debutify ending in April 2023 to Binary Castle
   starting in March 2024, leaving an unexplained eleven-month gap that a recruiter
